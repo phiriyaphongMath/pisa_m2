@@ -79,7 +79,7 @@ source("/Users/pahphrame/Library/CloudStorage/OneDrive-ChulalongkornUniversity/r
 บทเรียนนี้ออกแบบมาให้นักเรียนสามารถเรียนรู้ด้วยตนเองผ่านระบบ **Scrollytelling**  
 เพียงแค่เลื่อนหน้าจอขึ้น-ลง เนื้อหาแต่ละส่วนจะปรากฏเป็นข้อความบรรยายพร้อมภาพประกอบในรูปแบบ “สติ๊กเกอร์” เพื่อช่วยให้เข้าใจเนื้อหาได้ง่ายขึ้น
 
-ระหว่างเรียน นักเรียนจะพบคำถามแทรกอยู่เป็นระยะ (20 คะแนน)กรุณาตอบคำถามให้ครบทุกข้อก่อนกดส่งคำตอบ  
+ระหว่างเรียน นักเรียนจะพบคำถามแทรกอยู่เป็นระยะ (20 คะแนน) กรุณาตอบคำถามให้ครบทุกข้อก่อนกดส่งคำตอบ  
 ขอให้สนุกกับการเรียนรู้ครับ!
 :::
 
@@ -1596,7 +1596,6 @@ axis.title = element_blank())
     <option value="" disabled selected>เลือก</option>
     <option value="เป็นสมการเชิงเส้นสองตัวแปร">เป็น</option>
     <option value="ไม่เป็นสมการเชิงเส้นสองตัวแปร">ไม่เป็น</option>
-    <option value="20">20</option>
   </select> สมการเชิงเส้นสองตัวแปร (1 point)
 
 [@cr-example_equation]{hlz="2"} $y-1.5x-3=0$ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.511214336" 
@@ -1604,7 +1603,6 @@ axis.title = element_blank())
     <option value="" disabled selected>เลือก</option>
     <option value="เป็นสมการเชิงเส้นสองตัวแปร">เป็น</option>
     <option value="ไม่เป็นสมการเชิงเส้นสองตัวแปร">ไม่เป็น</option>
-    <option value="21">21</option>
   </select> สมการเชิงเส้นสองตัวแปร (1 point)
 
 [@cr-example_equation]{hlz="3"} $x+xy=1$ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.424193311" 
@@ -1612,7 +1610,6 @@ axis.title = element_blank())
     <option value="" disabled selected>เลือก</option>
     <option value="เป็นสมการเชิงเส้นสองตัวแปร">เป็น</option>
     <option value="ไม่เป็นสมการเชิงเส้นสองตัวแปร">ไม่เป็น</option>
-    <option value="22">22</option>
   </select> สมการเชิงเส้นสองตัวแปร (1 point)
 
 [@cr-example_equation]{hlz="4"} $x^2-2x+1=y$ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.2006214911" 
@@ -1620,7 +1617,6 @@ axis.title = element_blank())
     <option value="" disabled selected>เลือก</option>
     <option value="เป็นสมการเชิงเส้นสองตัวแปร">เป็น</option>
     <option value="ไม่เป็นสมการเชิงเส้นสองตัวแปร">ไม่เป็น</option>
-    <option value="23">23</option>
   </select> สมการเชิงเส้นสองตัวแปร (1 point)
 
 [@cr-example_equation]{hlz="5"} $y=-4$ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.51887481" 
@@ -1628,7 +1624,6 @@ axis.title = element_blank())
     <option value="" disabled selected>เลือก</option>
     <option value="เป็นสมการเชิงเส้นสองตัวแปร">เป็น</option>
     <option value="ไม่เป็นสมการเชิงเส้นสองตัวแปร">ไม่เป็น</option>
-    <option value="24">24</option>
   </select> สมการเชิงเส้นสองตัวแปร (1 point)
 
 ::: {#cr-example_equation}
@@ -2131,6 +2126,10 @@ plot.title = element_text(
   เราได้บันทึกคำตอบของคุณไว้แล้ว<br>
   คุณสามารถกดย้อนกลับ แล้วเข้ามาที่เมนูเดิม<br>
   เพื่อทบทวนและส่งคำตอบเพิ่มเติมได้
+  <br><br>
+  <!-- ปุ่มลิงก์ -->
+  <a href="index.qmd" style="display:inline-block; margin-right:1em; padding:0.5em 1em; background:#007bff; color:#fff; text-decoration:none; border-radius:5px;">กลับหน้าหลัก</a>
+  <a href="2d_3d_fig.qmd" style="display:inline-block; padding:0.5em 1em; background:#28a745; color:#fff; text-decoration:none; border-radius:5px;">ไปบทเรียนถัดไป</a>
 </div>
 
 

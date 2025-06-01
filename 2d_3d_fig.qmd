@@ -78,7 +78,7 @@ source("/Users/pahphrame/Library/CloudStorage/OneDrive-ChulalongkornUniversity/r
 บทเรียนนี้ออกแบบมาให้นักเรียนสามารถเรียนรู้ด้วยตนเองผ่านระบบ **Scrollytelling**  
 เพียงแค่เลื่อนหน้าจอขึ้น-ลง เนื้อหาแต่ละส่วนจะปรากฏเป็นข้อความบรรยายพร้อมภาพประกอบในรูปแบบ “สติ๊กเกอร์” เพื่อช่วยให้เข้าใจเนื้อหาได้ง่ายขึ้น
 
-ระหว่างเรียน นักเรียนจะพบคำถามแทรกอยู่เป็นระยะ (8 คะแนน)กรุณาตอบคำถามให้ครบทุกข้อก่อนกดส่งคำตอบ  
+ระหว่างเรียน นักเรียนจะพบคำถามแทรกอยู่เป็นระยะ (8 คะแนน) กรุณาตอบคำถามให้ครบทุกข้อก่อนกดส่งคำตอบ  
 ขอให้สนุกกับการเรียนรู้ครับ!
 :::
 
@@ -533,6 +533,9 @@ source("/Users/pahphrame/Library/CloudStorage/OneDrive-ChulalongkornUniversity/r
   เราได้บันทึกคำตอบของคุณไว้แล้ว<br>
   คุณสามารถกดย้อนกลับ แล้วเข้ามาที่เมนูเดิม<br>
   เพื่อทบทวนและส่งคำตอบเพิ่มเติมได้
+  <br><br>
+  <!-- ปุ่มลิงก์ -->
+  <a href="index.qmd" style="display:inline-block; margin-right:1em; padding:0.5em 1em; background:#007bff; color:#fff; text-decoration:none; border-radius:5px;">กลับหน้าหลัก</a>
 </div>
 
 

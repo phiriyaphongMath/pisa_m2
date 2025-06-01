@@ -1,5 +1,6 @@
 ---
-title: "Phiriyaphong Ringrod"
+title: "พิริยพงศ์ หริ่งรอด"
+subtitle: "Phiriyaphong Ringrod"
 about:
   id: hero-heading
   template: jolla
