@@ -1,0 +1,2258 @@
+---
+#title: "กราฟและความสัมพันธ์เชิงเส้น"
+#sidebar: false
+format:
+  closeread-html:
+    theme: cosmo
+    css: styles.css
+    include-in-header: 
+      - text: |
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet">
+    cr-style:
+      narrative-background-color-overlay: "#FFFBDE"
+      narrative-text-color-overlay: "#000000"
+      narrative-border-radius: "5px"
+      narrative-background-color-sidebar: "#90D1CA"
+      narrative-text-color-sidebar: "#000000"
+      narrative-font-size: "2em"
+      section-background-color: "#FFFEFF"
+ #     section-background-color: "#F2F2F2"
+      
+---
+
+<style>
+            body {
+              font-family: 'Sarabun', sans-serif;
+            }
+
+            h1 {
+              font-family: 'Sarabun', sans-serif;
+            }
+          </style>
+
+<style>
+  .progress-fixed-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 1050; /* ให้ลอยอยู่เหนือทุกอย่าง */
+  }
+  body {
+    padding-top: 40px; /* เผื่อพื้นที่ progress bar ด้านบน (ปรับตามความสูง progress bar) */
+  }
+</style>
+
+<div class="progress progress-fixed-top" style="height: 20px;">
+  <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%; font-weight:bold;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+    0%
+  </div>
+</div>
+
+
+
+```{r}
+#| echo: false
+#| include: false
+
+source("/Users/pahphrame/Library/CloudStorage/OneDrive-ChulalongkornUniversity/rpackage/premMathGrid/grid_create.R")
+
+
+```
+
+
+
+# คู่อันดับและกราฟ (ต่อ)
+
+<form id="myForm" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfRQsY96nl-4_Pm7Mpi9rPCG1FAEsKEZxP8M7udPQlBEVeUGg/formResponse" method="post" target="hidden_iframe">
+
+<!--ปุ่มที่ถูกซ่อน กรอกเวลาเข้าอัตโนมัติ-->
+<input type="hidden" name="entry.671352720" id="entry-timein">
+
+
+::: {.callout-note icon="true"}
+## คำชี้แจง
+
+บทเรียนนี้ออกแบบมาให้นักเรียนสามารถเรียนรู้ด้วยตนเองผ่านระบบ **Scrollytelling**  
+เพียงแค่เลื่อนหน้าจอขึ้น-ลง เนื้อหาแต่ละส่วนจะปรากฏเป็นข้อความบรรยายพร้อมภาพประกอบในรูปแบบ “สติ๊กเกอร์” เพื่อช่วยให้เข้าใจเนื้อหาได้ง่ายขึ้น
+
+ระหว่างเรียน นักเรียนจะพบคำถามแทรกอยู่เป็นระยะ (20 คะแนน)กรุณาตอบคำถามให้ครบทุกข้อก่อนกดส่งคำตอบ  
+ขอให้สนุกกับการเรียนรู้ครับ!
+:::
+
+
+
+::::: {.cr-section layout="overlay-center"}
+
+## กราฟและการนำกราฟไปใช้
+
+@cr-teacher_talk จากหัวข้อที่ผ่านมา เราได้เห็นตัวอย่างการใช้คู่อันดับในการแสดงความสัมพันธ์ระหว่างปริมาณสองปริมาณมาแล้ว
+
+@cr-teacher_talk ซึ่งเมื่อมีความสัมพันธ์ระหว่างปริมาณสองปริมาณ 
+
+@cr-teacher_talk เราสามารถแสดงความสัมพันธ์ได้ โดยใช้กราฟของคู่อันดับ 
+
+@cr-teacher_talk และเมื่อมีกราฟแสดงความสัมพันธ์ระหว่างปริมาณสองปริมาณ 
+
+@cr-teacher_talk เราสามารถหาพิกัดของจุดที่อยู่บนกราฟนั้นได้ด้วย
+
+@cr-teacher_talk  โดยก่อนที่เราจะเริ่มทบทวนบทเรียนกันในวันนี้
+
+@cr-teacher_talk  อาจารย์อยากทราบข้อมูลส่วนตัวของนักเรียนสักหน่อย เช่นเดิม
+
+@cr-teacher_talk อีเมล <input
+    style="flex:0 2 70px; min-width:0; max-width:250px; width:250px; display:inline-block;"
+    class="form-control"
+    name="entry.415967528"
+    placeholder="เช่น example@email.com"
+    type="email"
+    required>
+
+@cr-teacher_talk รหัสนักเรียน <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:130px; display:inline-block;"
+    class="form-control"
+    name="entry.2117105275"
+    placeholder="เช่น 023143"
+    type="text"
+    required> 
+
+@cr-teacher_talk เป็นนักเรียน ม.$2$ ห้อง <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.741750426" 
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+  </select>
+
+@cr-teacher_talk คำนำหน้าชื่อ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.331042075" 
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="เด็กชาย">เด็กชาย</option>
+    <option value="เด็กหญิง">เด็กหญิง</option>
+    <option value="นาย">นาย</option>
+    <option value="นางสาว">นางสาว</option>
+  </select> 
+
+@cr-teacher_talk ชื่อ - นามสกุล 
+
+<div style="display: flex; gap: 0.1rem;">
+  <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:130px; display:inline-block;"
+    class="form-control"
+    name="entry.77651116"
+    placeholder="ชื่อ"
+    type="text"
+    required>
+  <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:130px; display:inline-block;"
+    class="form-control"
+    name="entry.1304653929"
+    placeholder="นามสกุล"
+    type="text"
+    required>
+</div>
+
+@cr-teacher_talk ต่อไปจะเป็นการทบทวนเกี่ยวกับกราฟและการนำไปใช้ 
+
+
+::: {#cr-teacher_talk}
+
+![](images/teacher_intro.png)
+
+:::
+
+
+@cr-eeg_shop  ดังตัวอย่างต่อไปนี้ 
+
+@cr-eeg_shop เราจะเขียนกราฟแสดงความสัมพันธ์ระหว่างจำนวนไข่ไก่เป็นฟองและราคาไข่ไก่เป็นบาท
+
+
+::: {#cr-eeg_shop}
+
+![](images/egg.png)
+
+:::
+
+@cr-egg จากข้อมูลในตาราง ดังนี้
+
+@cr-egg เมื่อกำหนดให้แกน $X$ แสดงจำนวนไข่ไก่เป็นฟอง 
+
+@cr-egg และแกน $Y$ แสดงราคาเป็นบาท
+
+@cr-egg เราจะได้กราฟแสดงความสัมพันธ์ระหว่างจำนวนไข่ไก่เป็นฟองและราคาเป็นบาท คือ
+
+
+::: {#cr-egg}
+
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+
+library(kableExtra)
+library(DT)
+
+dat_egg = data.frame(
+  egg = c(1,2,3,4,5,6),
+  price = c(5,10,15,20,25,30)
+)
+
+
+#dat_egg|>kable(booktabs= FALSE)
+
+datatable(
+  dat_egg,
+  colnames = c("จำนวนไข่ไก่ (ฟอง) ", "ราคาไข่ไก่ (บาท)"),
+  options = list(
+    autoWidth = TRUE,
+    dom = 't',
+    columnDefs = list(
+      list(width = '100px', targets = 0),
+      list(width = '140px', targets = 1),
+      list(className = 'dt-center', targets = "_all")
+    )
+  ),
+  rownames = FALSE
+)
+
+#"t" = table only (ไม่มี search, ไม่มี pagination, ไม่มี info)
+#ถ้าอยากได้ table กับ info (จำนวนแถว) ใช้ "ti"
+#ถ้าอยากได้เฉพาะ table กับ search ใช้ "tf"
+
+```
+
+::: 
+
+@cr-egg1_plot เมื่อจำนวนไข่ไก่ คือ $1$ ฟอง และราคาไข่ไก่ $5$ บาท
+
+@cr-egg1_plot ซึ่งคือคู่อันดับ $(1,\ 5)$
+
+@cr-egg1_plot สามารถเขียนกราฟได้ ดังนี้
+
+::: {#cr-egg1_plot}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+
+datatable(
+  dat_egg,
+  colnames = c("จำนวนไข่ไก่ (ฟอง)", "ราคาไข่ไก่ (บาท)"),
+  options = list(
+    autoWidth = TRUE,
+    dom = 't',
+    columnDefs = list(
+      list(width = '100px', targets = 0),
+      list(width = '140px', targets = 1),
+      list(className = 'dt-center', targets = "_all")
+    ),
+    rowCallback = JS(
+      "function(row, data, index) {",
+      "  if(index === 0) {",    # index = 0 คือแถวแรก (ไม่รวม header)
+      "    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});",
+      "  }",
+      "}"
+    )
+  ),
+  rownames = FALSE
+)
+
+grid_no(ymin=0,ymax=50,ystep=5,axis_no_x=1,axis_no_y=1,
+family = "CMU Classical Serif",
+family_axis_name="TH SarabunPSK",
+nudge_x_axis_right = 4.2,
+right_space= 7,
+top_space = 6,
+nudge_y_axis_right = 4,
+x_axis_label_size=10,
+y_axis_label_size=10,
+coord_ratio = 0.2,
+x_label_down = -2.5,
+nudge_vertical_axis_x_no=-2.5,
+x_axis_label="จำนวนไข่ไก่ (ฟอง)",
+                    y_axis_label="ราคาไข่ไก่ (บาท)")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=1,y=5),size = 6,col = "#21D15B")
+
+```
+
+
+:::
+
+
+@cr-egg2_plot เมื่อจำนวนไข่ไก่ คือ $2$ ฟอง และราคาไข่ไก่ $10$ บาท
+
+@cr-egg2_plot ซึ่งคือคู่อันดับ $(2,\ 10)$
+
+@cr-egg2_plot สามารถเขียนกราฟได้ ดังนี้
+
+::: {#cr-egg2_plot}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+
+datatable(
+  dat_egg,
+  colnames = c("จำนวนไข่ไก่ (ฟอง)", "ราคาไข่ไก่ (บาท)"),
+  options = list(
+    autoWidth = TRUE,
+    dom = 't',
+    columnDefs = list(
+      list(width = '100px', targets = 0),
+      list(width = '140px', targets = 1),
+      list(className = 'dt-center', targets = "_all")
+    ),
+    rowCallback = JS(
+      "function(row, data, index) {",
+      "  if(index === 1) {",    # index = 0 คือแถวแรก (ไม่รวม header)
+      "    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});",
+      "  }",
+      "}"
+    )
+  ),
+  rownames = FALSE
+)
+
+grid_no(ymin=0,ymax=50,ystep=5,axis_no_x=1,axis_no_y=1,
+family = "CMU Classical Serif",
+family_axis_name="TH SarabunPSK",
+nudge_x_axis_right = 4.2,
+right_space= 7,
+top_space = 6,
+nudge_y_axis_right = 4,
+x_axis_label_size=10,
+y_axis_label_size=10,
+coord_ratio = 0.2,
+x_label_down = -2.5,
+nudge_vertical_axis_x_no=-2.5,
+x_axis_label="จำนวนไข่ไก่ (ฟอง)",
+                    y_axis_label="ราคาไข่ไก่ (บาท)")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=2,y=10),size = 6,col = "#21D15B")
+
+```
+
+:::
+
+@cr-egg3_plot เมื่อจำนวนไข่ไก่ คือ $3$ ฟอง และราคาไข่ไก่ $15$ บาท
+
+@cr-egg3_plot ซึ่งคือคู่อันดับ $(3,\ 15)$
+
+@cr-egg3_plot สามารถเขียนกราฟได้ ดังนี้
+
+::: {#cr-egg3_plot}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+
+datatable(
+  dat_egg,
+  colnames = c("จำนวนไข่ไก่ (ฟอง)", "ราคาไข่ไก่ (บาท)"),
+  options = list(
+    autoWidth = TRUE,
+    dom = 't',
+    columnDefs = list(
+      list(width = '100px', targets = 0),
+      list(width = '140px', targets = 1),
+      list(className = 'dt-center', targets = "_all")
+    ),
+    rowCallback = JS(
+      "function(row, data, index) {",
+      "  if(index === 2) {",    # index = 0 คือแถวแรก (ไม่รวม header)
+      "    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});",
+      "  }",
+      "}"
+    )
+  ),
+  rownames = FALSE
+)
+
+grid_no(ymin=0,ymax=50,ystep=5,axis_no_x=1,axis_no_y=1,
+family = "CMU Classical Serif",
+family_axis_name="TH SarabunPSK",
+nudge_x_axis_right = 4.2,
+right_space= 7,
+top_space = 6,
+nudge_y_axis_right = 4,
+x_axis_label_size=10,
+y_axis_label_size=10,
+coord_ratio = 0.2,
+x_label_down = -2.5,
+nudge_vertical_axis_x_no=-2.5,
+x_axis_label="จำนวนไข่ไก่ (ฟอง)",
+                    y_axis_label="ราคาไข่ไก่ (บาท)")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=3,y=15),size = 6,col = "#21D15B")
+
+```
+
+:::
+
+@cr-egg4_plot เมื่อจำนวนไข่ไก่ คือ $4$ ฟอง และราคาไข่ไก่ $20$ บาท
+
+@cr-egg4_plot ซึ่งคือคู่อันดับ $(4,\ 20)$
+
+@cr-egg4_plot สามารถเขียนกราฟได้ ดังนี้
+
+::: {#cr-egg4_plot}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+
+datatable(
+  dat_egg,
+  colnames = c("จำนวนไข่ไก่ (ฟอง)", "ราคาไข่ไก่ (บาท)"),
+  options = list(
+    autoWidth = TRUE,
+    dom = 't',
+    columnDefs = list(
+      list(width = '100px', targets = 0),
+      list(width = '140px', targets = 1),
+      list(className = 'dt-center', targets = "_all")
+    ),
+    rowCallback = JS(
+      "function(row, data, index) {",
+      "  if(index === 3) {",    # index = 0 คือแถวแรก (ไม่รวม header)
+      "    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});",
+      "  }",
+      "}"
+    )
+  ),
+  rownames = FALSE
+)
+
+grid_no(ymin=0,ymax=50,ystep=5,axis_no_x=1,axis_no_y=1,
+family = "CMU Classical Serif",
+family_axis_name="TH SarabunPSK",
+nudge_x_axis_right = 4.2,
+right_space= 7,
+top_space = 6,
+nudge_y_axis_right = 4,
+x_axis_label_size=10,
+y_axis_label_size=10,
+coord_ratio = 0.2,
+x_label_down = -2.5,
+nudge_vertical_axis_x_no=-2.5,
+x_axis_label="จำนวนไข่ไก่ (ฟอง)",
+                    y_axis_label="ราคาไข่ไก่ (บาท)")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=4,y=20),size = 6,col = "#21D15B")
+
+```
+
+:::
+
+@cr-egg5_plot เมื่อจำนวนไข่ไก่ คือ $5$ ฟอง และราคาไข่ไก่ $25$ บาท
+
+@cr-egg5_plot ซึ่งคือคู่อันดับ $(5,\ 25)$
+
+@cr-egg5_plot สามารถเขียนกราฟได้ ดังนี้
+
+::: {#cr-egg5_plot}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+
+datatable(
+  dat_egg,
+  colnames = c("จำนวนไข่ไก่ (ฟอง)", "ราคาไข่ไก่ (บาท)"),
+  options = list(
+    autoWidth = TRUE,
+    dom = 't',
+    columnDefs = list(
+      list(width = '100px', targets = 0),
+      list(width = '140px', targets = 1),
+      list(className = 'dt-center', targets = "_all")
+    ),
+    rowCallback = JS(
+      "function(row, data, index) {",
+      "  if(index === 4) {",    # index = 0 คือแถวแรก (ไม่รวม header)
+      "    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});",
+      "  }",
+      "}"
+    )
+  ),
+  rownames = FALSE
+)
+
+grid_no(ymin=0,ymax=50,ystep=5,axis_no_x=1,axis_no_y=1,
+family = "CMU Classical Serif",
+family_axis_name="TH SarabunPSK",
+nudge_x_axis_right = 4.2,
+right_space= 7,
+top_space = 6,
+nudge_y_axis_right = 4,
+x_axis_label_size=10,
+y_axis_label_size=10,
+coord_ratio = 0.2,
+x_label_down = -2.5,
+nudge_vertical_axis_x_no=-2.5,
+x_axis_label="จำนวนไข่ไก่ (ฟอง)",
+                    y_axis_label="ราคาไข่ไก่ (บาท)")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=5,y=25),size = 6,col = "#21D15B")
+
+```
+
+:::
+
+@cr-egg6_plot เมื่อจำนวนไข่ไก่ คือ $6$ ฟอง และราคาไข่ไก่ $30$ บาท
+
+@cr-egg6_plot ซึ่งคือคู่อันดับ $(6,\ 30)$
+
+@cr-egg6_plot สามารถเขียนกราฟได้ ดังนี้
+
+::: {#cr-egg6_plot}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+
+datatable(
+  dat_egg,
+  colnames = c("จำนวนไข่ไก่ (ฟอง)", "ราคาไข่ไก่ (บาท)"),
+  options = list(
+    autoWidth = TRUE,
+    dom = 't',
+    columnDefs = list(
+      list(width = '100px', targets = 0),
+      list(width = '140px', targets = 1),
+      list(className = 'dt-center', targets = "_all")
+    ),
+    rowCallback = JS(
+      "function(row, data, index) {",
+      "  if(index === 5) {",    # index = 0 คือแถวแรก (ไม่รวม header)
+      "    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});",
+      "  }",
+      "}"
+    )
+  ),
+  rownames = FALSE
+)
+
+grid_no(ymin=0,ymax=50,ystep=5,axis_no_x=1,axis_no_y=1,
+family = "CMU Classical Serif",
+family_axis_name="TH SarabunPSK",
+nudge_x_axis_right = 4.2,
+right_space= 7,
+top_space = 6,
+nudge_y_axis_right = 4,
+x_axis_label_size=10,
+y_axis_label_size=10,
+coord_ratio = 0.2,
+x_label_down = -2.5,
+nudge_vertical_axis_x_no=-2.5,
+x_axis_label="จำนวนไข่ไก่ (ฟอง)",
+                    y_axis_label="ราคาไข่ไก่ (บาท)")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=6,y=30),size = 6,col = "#21D15B")
+
+```
+
+:::
+
+@cr-egg_total1_plot ดังนั้น กราฟแสดงความสัมพันธ์ระหว่างจำนวนไข่ไก่เป็นฟองและราคาเป็นบาท
+
+::: {#cr-egg_total1_plot}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+
+datatable(
+  dat_egg,
+  colnames = c("จำนวนไข่ไก่ (ฟอง) ", "ราคาไข่ไก่ (บาท)"),
+  options = list(
+    autoWidth = TRUE,
+    dom = 't',
+    columnDefs = list(
+      list(width = '100px', targets = 0),
+      list(width = '140px', targets = 1),
+      list(className = 'dt-center', targets = "_all")
+    )
+  ),
+  rownames = FALSE
+)
+
+grid_no(ymin=0,ymax=50,ystep=5,axis_no_x=1,axis_no_y=1,
+family = "CMU Classical Serif",
+family_axis_name="TH SarabunPSK",
+nudge_x_axis_right = 4.2,
+right_space= 7,
+top_space = 6,
+nudge_y_axis_right = 4,
+x_axis_label_size=10,
+y_axis_label_size=10,
+coord_ratio = 0.2,
+x_label_down = -2.5,
+nudge_vertical_axis_x_no=-2.5,
+x_axis_label="จำนวนไข่ไก่ (ฟอง)",
+                    y_axis_label="ราคาไข่ไก่ (บาท)")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))
+#geom_point(aes(x=6,y=30),size = 6,col = "#21D15B")
+
+```
+
+:::
+
+@cr-egg_total2_plot เป็นดังนี้
+
+::: {#cr-egg_total2_plot}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+
+datatable(
+  dat_egg,
+  colnames = c("จำนวนไข่ไก่ (ฟอง) ", "ราคาไข่ไก่ (บาท)"),
+  options = list(
+    autoWidth = TRUE,
+    dom = 't',
+    columnDefs = list(
+      list(width = '100px', targets = 0),
+      list(width = '140px', targets = 1),
+      list(className = 'dt-center', targets = "_all")
+    )
+  ),
+  rownames = FALSE
+)
+
+grid_no(ymin=0,ymax=50,ystep=5,axis_no_x=1,axis_no_y=1,
+family = "CMU Classical Serif",
+family_axis_name="TH SarabunPSK",
+nudge_x_axis_right = 4.2,
+right_space= 7,
+top_space = 6,
+nudge_y_axis_right = 4,
+x_axis_label_size=10,
+y_axis_label_size=10,
+coord_ratio = 0.2,
+x_label_down = -2.5,
+nudge_vertical_axis_x_no=-2.5,
+x_axis_label="จำนวนไข่ไก่ (ฟอง)",
+                    y_axis_label="ราคาไข่ไก่ (บาท)")+
+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+#geom_point(aes(x=6,y=30),size = 6,col = "#21D15B")
+geom_point(data = dat_egg,
+aes(x=egg,y=price),size = 4,col = "#21D15B")
+
+
+```
+
+:::
+
+@cr-egg_total2_1_plot หรือบางครั้งอาจเห็นกราฟในลักษณะนี้
+
+::: {#cr-egg_total2_1_plot}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+
+dat_egg = data.frame(
+  egg = c(1,2,3,4,5,6),
+  price = c(5,10,15,20,25,30)
+)
+
+dat_egg|>
+ggplot(aes(x=egg,y=price))+
+geom_point(size = 3, col = "steelblue")+
+scale_y_continuous(limits =c(0,50),breaks =seq(0,50,5))+
+scale_x_continuous(limits =c(0,10),breaks =seq(0,10,1))+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=0,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_text(family="TH SarabunPSK", size = 20))+
+labs(x="จำนวนไข่ไก่ (ฟอง)",
+y="ราคาไข่ไก่ (บาท)")
+#geom_point(aes(x=6,y=30),size = 6,col = "#21D15B")
+#geom_point(data = dat_egg,
+#aes(x=egg,y=price),size = 4,col = "#21D15B")
+
+
+```
+
+
+:::
+
+
+@cr-oil_stationในตัวอย่างถัดไป เราจะกล่าวถึงราคาน้ำมันดีเซล
+
+@cr-oil_station จากการสำรวจราคาน้ำมันในวันหนึ่ง
+
+@cr-oil_station พบว่าน้ำมันดีเซลราคาลิตรละ $30$ บาท
+
+::: {#cr-oil_station}
+
+![](images/oil.png)
+
+:::
+
+@cr-oil_table เขียนตารางแสดงปริมาณและราคาน้ำมันบางส่วนได้ดังนี้
+
+
+
+::: {#cr-oil_table}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+
+library(kableExtra)
+library(DT)
+
+dat_oil = data.frame(
+  oil = c(1,2,3,4,5,6),
+  price = seq(30,180,30)
+)
+
+
+#dat_egg|>kable(booktabs= FALSE)
+
+datatable(
+  dat_oil,
+  colnames = c("ปริมาณน้ำมัน (ลิตร)", "ราคาน้ำมัน (บาท)"),
+  options = list(
+    autoWidth = TRUE,
+    dom = 't',
+    columnDefs = list(
+      list(width = '100px', targets = 0),
+      list(width = '140px', targets = 1),
+      list(className = 'dt-center', targets = "_all")
+    )
+  ),
+  rownames = FALSE
+)
+
+```
+
+:::
+
+@cr-oil_grid ให้แกน $X$ แสดงปริมาณน้ำมันเป็นลิตร 
+
+@cr-oil_grid และแกน $Y$ แสดงราคาน้ำมันเป็นบาท 
+
+
+
+
+::: {#cr-oil_grid}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4
+
+
+dat_oil|>
+ggplot(aes(x=oil,y=price))+
+#geom_point(size = 3, col = "steelblue")+
+scale_y_continuous(limits =c(0,300),breaks =seq(0,300,30))+
+scale_x_continuous(limits =c(0,10),breaks =seq(0,10,1))+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=0,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_text(family="TH SarabunPSK", size = 20))+
+labs(x="ปริมาณน้ำมัน (ลิตร)",
+y="ราคาน้ำมัน (บาท)")
+#geom_point(aes(x=6,y=30),size = 6,col = "#21D15B")
+#geom_point(data = dat_egg,
+#aes(x=egg,y=price),size = 4,col = "#21D15B")
+
+
+```
+
+:::
+
+@cr-oil_grid2 เราจะเขียนกราฟแสดงความสัมพันธ์ได้ดังรูป
+
+::: {#cr-oil_grid2}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4
+
+
+dat_oil|>
+ggplot(aes(x=oil,y=price))+
+geom_point(size = 3, col = "steelblue")+
+scale_y_continuous(limits =c(0,300),breaks =seq(0,300,30))+
+scale_x_continuous(limits =c(0,10),breaks =seq(0,10,1))+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=0,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_text(family="TH SarabunPSK", size = 20))+
+labs(x="ปริมาณน้ำมัน (ลิตร)",
+y="ราคาน้ำมัน (บาท)")
+#geom_point(aes(x=6,y=30),size = 6,col = "#21D15B")
+#geom_point(data = dat_egg,
+#aes(x=egg,y=price),size = 4,col = "#21D15B")
+
+
+```
+
+:::
+
+เนื่องจากเราสามารถหาราคาน้ำมันได้เสมอ 
+
+ไม่ว่าน้ำมันจะมีปริมาณเท่าใด
+
+@cr-oil_grid2_line จึงเขียนกราฟแสดงความสัมพันธ์ระหว่างปริมาณน้ำมันและราคาน้ำมันโดยลากเส้นเชื่อมจุดต่าง ๆ ให้ต่อเนื่องกันเป็นเส้นตรง ดังรูป
+
+::: {#cr-oil_grid2_line}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4
+
+
+dat_oil|>
+ggplot(aes(x=oil,y=price))+
+geom_point(size = 1.5, col = "red")+
+geom_point(aes(x=0,y=0),size = 1.5, col = "red")+
+geom_segment(x=0,y=0,xend=7,yend=210,col = "steelblue",
+arrow = arrow(angle = 15,
+              type = "closed",
+              length = unit(0.2,"cm"),
+              ends = "last"))+
+scale_y_continuous(limits =c(0,300),breaks =seq(0,300,30))+
+scale_x_continuous(limits =c(0,10),breaks =seq(0,10,1))+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=0,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_text(family="TH SarabunPSK", size = 20))+
+labs(x="ปริมาณน้ำมัน (ลิตร)",
+y="ราคาน้ำมัน (บาท)")
+#geom_point(aes(x=6,y=30),size = 6,col = "#21D15B")
+#geom_point(data = dat_egg,
+#aes(x=egg,y=price),size = 4,col = "#21D15B")
+
+
+```
+
+:::
+
+เราสามารถใช้กราฟนี้
+
+ตอบคำถามเกี่ยวกับการหาราคาน้ำมันเมื่อกำหนดปริมาณน้ำมันให้
+
+
+@cr-oil_grid2_line_q1 เช่น ราคาน้ำมันเมื่อปริมาณน้ำมัน คือ $3.5$ ลิตร คือ <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:180px; display:inline-block;"
+    class="form-control"
+    name="entry.1792005475"
+    placeholder="ทศนิยม 2 ตำแหน่ง"
+    type="number"
+    required> บาท (1 point)
+
+
+::: {#cr-oil_grid2_line_q1}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4
+
+
+dat_oil|>
+ggplot(aes(x=oil,y=price))+
+geom_point(size = 1.5, col = "red")+
+geom_point(aes(x=0,y=0),size = 1.5, col = "red")+
+geom_segment(x=0,y=0,xend=7,yend=210,col = "steelblue",
+arrow = arrow(angle = 15,
+              type = "closed",
+              length = unit(0.2,"cm"),
+              ends = "last"))+
+geom_segment(x=3.5,y=0,xend=3.5,yend=105,col = "#E41785",
+arrow = arrow(angle = 15,
+              type = "closed",
+              length = unit(0.2,"cm"),
+              ends = "first"),
+              linetype="dashed")+
+geom_segment(x=0,y=105,xend=3.5,yend=105,col = "#E41785",
+arrow = arrow(angle = 15,
+              type = "closed",
+              length = unit(0.2,"cm"),
+              ends = "first"),
+              linetype="dashed")+
+scale_y_continuous(limits =c(0,300),breaks =seq(0,300,30))+
+scale_x_continuous(limits =c(0,10),breaks =seq(0,10,1))+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=0,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_text(family="TH SarabunPSK", size = 20))+
+labs(x="ปริมาณน้ำมัน (ลิตร)",
+y="ราคาน้ำมัน (บาท)")
+#geom_point(aes(x=6,y=30),size = 6,col = "#21D15B")
+#geom_point(data = dat_egg,
+#aes(x=egg,y=price),size = 4,col = "#21D15B")
+
+
+```
+
+:::
+
+@cr-oil_grid2_line  ราคาน้ำมันเมื่อปริมาณน้ำมัน คือ $9$ ลิตร คือ <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:180px; display:inline-block;"
+    class="form-control"
+    name="entry.730938393"
+    placeholder="ทศนิยม 2 ตำแหน่ง"
+    type="number"
+    required> บาท (1 point)
+
+เมื่อนักเรียนเข้าใจเกี่ยวกับกราฟแสดงความสัมพันธ์ระหว่างปริมาณ $2$ สองปริมาณแล้ว
+
+เรามาลองวัดความเข้ากันสักหน่อยดีกว่า
+
+@cr-rain_situation แบบฝึกหัดข้อที่ 1
+
+ในช่วงต้นฤดูฝนของปีนี้ จังหวัดแห่งหนึ่งในชนบทของประเทศไทยได้ประสบกับสภาพอากาศที่เปลี่ยนแปลงอย่างต่อเนื่อง บางวันท้องฟ้าแจ่มใส @cr-sunny_situation
+
+แต่บางวันก็มีฝนตกหนักจนท้องทุ่งและสวนต่าง ๆ เปียกชุ่ม @cr-rain_situation 
+
+@cr-sunny_situation เพื่อศึกษาความเปลี่ยนแปลงของปริมาณน้ำฝนและผลกระทบต่อชีวิตประจำวันของชาวบ้าน 
+
+@cr-rain_situation นักเรียนกลุ่มหนึ่งจึงได้ช่วยกันบันทึกปริมาณน้ำฝนที่ตกในแต่ละวันติดต่อกันเป็นเวลา 10 วัน
+ข้อมูลที่ได้จะถูกนำมาใช้วิเคราะห์และตอบคำถามต่าง ๆ เกี่ยวกับปริมาณน้ำฝนในช่วงเวลานั้น
+
+::: {#cr-rain_situation}
+
+![](images/rain_situation.png)
+
+:::
+
+::: {#cr-sunny_situation}
+
+![](images/sunny.png)
+
+:::
+
+
+@cr-rain_graph ต่อไปนี้คือกราฟแสดงข้อมูลที่นักเรียนได้บันทึกไว้
+
+@cr-rain_graph จงตอบคำถามต่อไปนี้
+
+@cr-rain_graph ปริมาณน้ำฝนที่วัดได้ในวันที่ $2$ เป็นเท่าใด 
+
+@cr-rain_graph **ตอบ** <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.2087907554" 
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="25">$25$</option>
+    <option value="30">$30$</option>
+    <option value="35">$35$</option>
+    <option value="40">$40$</option>
+    <option value="45">$45$</option>
+    <option value="50">$50$</option>
+    <option value="55">$55$</option>
+    <option value="60">$60$</option>
+    <option value="65">$65$</option>
+    <option value="70">$70$</option>
+  </select> มิลลิเมตร (1 point)
+
+@cr-rain_graph วันที่เท่าใดที่ฝนตกมากที่สุด
+
+@cr-rain_graph **ตอบ** วันที่ <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:180px; display:inline-block;"
+    class="form-control"
+    name="entry.667124314"
+    placeholder="จำนวนเต็ม"
+    type="number"
+    step="1"
+    required> (1 point)
+
+@cr-rain_graph ในวันที่ฝนตกมากที่สุด วัดปริมาณน้ำฝนได้กี่มิลลิเมตร
+
+@cr-rain_graph **ตอบ** <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:180px; display:inline-block;"
+    class="form-control"
+    name="entry.723519845"
+    placeholder="จำนวนเต็ม"
+    type="number"
+    step="1"
+    required> มิลลิเมตร (1 point)
+
+@cr-rain_graph ในวันที่ฝนตกน้อยที่สุด และวันที่ฝนตกมากที่สุด มีปริมาณน้ำฝนต่างกันเท่าใด
+
+@cr-rain_graph **ตอบ** <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:180px; display:inline-block;"
+    class="form-control"
+    name="entry.1560069243"
+    placeholder="จำนวนเต็ม"
+    type="number"
+    step="1"
+    required> มิลลิเมตร
+
+
+::: {#cr-rain_graph}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4
+
+
+dat_rain = data.frame(
+  day = seq(1,10,1),
+  rain = c(25,35,40,55,60,50,45,70,65,45)
+)
+
+dat_rain|>
+ggplot(aes(x=day,y=rain))+
+geom_point(size = 2, col = "red")+
+scale_y_continuous(limits =c(0,100),breaks =seq(0,100,10))+
+scale_x_continuous(limits =c(0,10),breaks =seq(0,10,1))+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=0,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_text(family="TH SarabunPSK", size = 20))+
+labs(x="วันที่",
+y="ปริมาณน้ำฝน (มม.)")
+#geom_point(aes(x=6,y=30),size = 6,col = "#21D15B")
+#geom_point(data = dat_egg,
+#aes(x=egg,y=price),size = 4,col = "#21D15B")
+
+
+```
+
+
+:::
+
+@cr-medicine_fig แบบฝึกหัดข้อที่ 2
+
+@cr-medicine_fig หลังจากได้รับการวินิจฉัยจากแพทย์ ผู้ป่วยรายหนึ่งได้รับยาชนิดหนึ่งในขนาด 500 มิลลิกรัม 
+
+@cr-medicine_fig เพื่อรักษาอาการของโรคตามคำแนะนำทางการแพทย์ 
+
+@cr-medicine_fig หลังจากรับประทานยาเข้าไปแล้ว ปริมาณยาที่อยู่ในร่างกายจะค่อย ๆ ลดลงตามกลไกการดูดซึมและขับออกของร่างกาย 
+
+@cr-medicine_fig ซึ่งเป็นลักษณะปกติของการใช้ยาในทางคลินิก
+
+@cr-medicine_fig ในการศึกษาครั้งนี้ ได้มีการบันทึกปริมาณยาที่เหลืออยู่ในร่างกายของผู้ป่วยในแต่ละช่วงเวลา 
+
+::: {#cr-medicine_fig}
+
+![](images/medicine.png)
+
+:::
+
+@cr-medicine_graph และนำข้อมูลดังกล่าวมาแสดงในรูปแบบกราฟ
+
+จงตอบคำถามต่อไปนี้ @cr-medicine_graph 
+
+หลังจากผู้ป่วยรับประทานยาไปแล้ว $2$ ชั่วโมง มีปริมาณยาที่เหลืออยู่ในเลือดประมาณเท่าใด @cr-medicine_graph 
+
+@cr-medicine_graph **ตอบ** ประมาณ <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:180px; display:inline-block;"
+    class="form-control"
+    name="entry.1720609548"
+    placeholder="จำนวนเต็ม"
+    type="number"
+    step="1"
+    required> มิลลิกรัม (1 point)
+
+หลังจากผู้ป่วยรับประทานยาไปนานเท่าใด จึงมีปริมาณยาที่เหลืออยู่ในเลือดครึ่งหนึ่งของปริมาณเดิม @cr-medicine_graph 
+
+@cr-medicine_graph **ตอบ** เวลาผ่านไปประมาณ <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:180px; display:inline-block;"
+    class="form-control"
+    name="entry.791975019"
+    placeholder="จำนวนเต็ม"
+    type="number"
+    step="1"
+    required> ชั่วโมง (1 point)
+
+::: {#cr-medicine_graph}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4
+
+
+dat_rain = data.frame(
+  day = seq(1,10,1),
+  rain = c(25,35,40,55,60,50,45,70,65,45)
+)
+
+dat_rain|>
+ggplot(aes(x=day,y=rain))+
+#geom_point(size = 2, col = "red")+
+scale_y_continuous(limits =c(0,500),breaks =seq(0,500,50))+
+scale_x_continuous(limits =c(0,7),breaks =seq(0,7,1))+
+geom_function(
+    fun = function(x){500/(2^x)}, 
+    xlim = c(0, 6.1),
+    size = 1,
+    col = "steelblue",
+    arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "last")
+  )+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=0,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_text(family="TH SarabunPSK", size = 20))+
+labs(x="เวลาที่ผ่านไป (ชั่วโมง)",
+y="ปริมาณยา (มิลลิกรัม)")
+
+
+```
+
+:::
+
+@cr-teacher_talk สำหรับการทบทวนเรื่องกราฟและการนำกราฟไปใช้
+
+@cr-teacher_talk อาจารย์ขอพักไว้เพียงเท่านี้ก่อนนะครับ
+
+@cr-teacher_talk เรามาต่อกันในเรื่องถัดไปเลยครับ
+
+
+
+---
+
+## ความสัมพันธ์เชิงเส้น
+
+
+
+@cr-teacher_talk2 ในหัวข้อที่ผ่านมา เราเห็นการเขียนแสดงความสัมพันธ์ระหว่างปริมาณสองปริมาณโดยใช้กราฟบนระนาบในระบบพิกัดฉากมาแล้ว
+
+@cr-teacher_talk2 กราฟเหล่านั้นมีทั้งกราฟที่เป็นแนวเส้นตรงและไม่ป็นแนวเส้นตรง 
+
+@cr-teacher_talk2 ต่อไปนี้เราจะศึกษาเพิ่มเติมเกี่ยวกับกราฟที่เป็นแนวเส้นตรง 
+
+@cr-teacher_talk2 กล่าวคือ เป็นเส้นตรง ส่วนหนึ่งของเส้นตรง หรือเป็นจุดที่เรียงอยู่ในแนวเส้นตรงเดียวกัน
+
+::: {#cr-teacher_talk2}
+
+![](images/teacher_intro.png)
+
+:::
+
+@cr-linear_example_graph1 จากสถานการณ์ของเรื่องการซื้อขายไข่ไก่
+
+@cr-linear_example_graph1 หรือปริมาณน้ำมันกับราคาน้ำมัน
+
+@cr-linear_example_graph1 ทั้งสองสถานการณ์นี้เป็นตัวอย่างของความสัมพันธ์ของปริมาณสองปริมาณที่มีกราฟอยู่ในแนวเส้นตรงเดียวกัน
+
+@cr-linear_example_graph1 เราเรียกความสัมพันธ์ในลักษณะนี้ว่า **ความสัมพันธ์เชิงเส้น (linear relation)**
+
+
+::: {#cr-linear_example_graph1}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4
+
+library(patchwork)
+
+dat_oil|>
+ggplot(aes(x=oil,y=price))+
+geom_point(size = 1.5, col = "red")+
+geom_point(aes(x=0,y=0),size = 1.5, col = "red")+
+geom_segment(x=0,y=0,xend=7,yend=210,col = "steelblue",
+arrow = arrow(angle = 15,
+              type = "closed",
+              length = unit(0.2,"cm"),
+              ends = "last"))+
+scale_y_continuous(limits =c(0,300),breaks =seq(0,300,30))+
+scale_x_continuous(limits =c(0,10),breaks =seq(0,10,1))+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=0,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_text(family="TH SarabunPSK", size = 20))+
+labs(x="ปริมาณน้ำมัน (ลิตร)",
+y="ราคาน้ำมัน (บาท)")->p1
+#geom_point(aes(x=6,y=30),size = 6,col = "#21D15B")
+#geom_point(data = dat_egg,
+#aes(x=egg,y=price),size = 4,col = "#21D15B")
+
+
+dat_egg = data.frame(
+  egg = c(1,2,3,4,5,6),
+  price = c(5,10,15,20,25,30)
+)
+
+dat_egg|>
+ggplot(aes(x=egg,y=price))+
+geom_point(size = 1.5, col = "steelblue")+
+scale_y_continuous(limits =c(0,50),breaks =seq(0,50,5))+
+scale_x_continuous(limits =c(0,10),breaks =seq(0,10,1))+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=0,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_text(family="TH SarabunPSK", size = 20))+
+labs(x="จำนวนไข่ไก่ (ฟอง)",
+y="ราคาไข่ไก่ (บาท)")->p2
+
+p2
+
+p1
+
+```
+
+:::
+
+[@cr-situation_linear]{hlz="1,2"} ให้นักเรียนพิจารณาความสัมพันธ์ต่อไปนี้
+
+เมื่อมีการกำหนดตัวแปรแทนจำนวนต่าง ๆ [@cr-situation_linear]{hlz="5,6"}
+
+เราสามารถเขียนสมการได้ ดังนี้ [@cr-situation_linear]{hlz="8,9"} 
+
+[@cr-situation_linear]{hlz="9"} เมื่อกำหนดค่า $x$ บางค่า และหาค่า $y$ ที่ทำให้สมการ $3x-y=5$ เป็นจริง จะได้ค่า $x$ และ $y$ ดังตารางนี้
+
+::: {#cr-situation_linear}
+
+| "สามเท่าของจำนวนเต็มจำนวนหนึ่ง
+| มากกว่าจำนวนเต็มอีกจำนวนหนึ่งอยู่ห้า"
+| ---
+| ถ้าให้
+| $x$ แทนจำนวนเต็มจำนวนหนึ่ง
+| $y$ แทนจำนวนเต็มอีกจำนวนหนึ่ง
+| ---
+| เขียนข้อความข้างต้นในรูปสมการได้เป็น
+| $3x-y=5$ 
+
+:::
+
+แต่ก่อนที่เราจะได้ตาราง อาจารย์อยากให้นักเรียนช่วยคำนวณหาของ $y$ เมื่ออาจารย์กำหนดค่าของ $x$ มาให้นะ
+
+เมื่อกำหนดให้ $x=-10$ จะได้ $y$ = <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:180px; display:inline-block;"
+    class="form-control"
+    name="entry.1329909743"
+    placeholder="จำนวนเต็ม"
+    type="number"
+    step="1"
+    required> (1 point) [@cr-equation]{scale-by="3"} 
+
+เมื่อกำหนดให้ $x=-5$ จะได้ $y$ = <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:180px; display:inline-block;"
+    class="form-control"
+    name="entry.682340048"
+    placeholder="จำนวนเต็ม"
+    type="number"
+    step="1"
+    required> (1 point) [@cr-equation]{scale-by="3"}
+
+เมื่อกำหนดให้ $x=0$ จะได้ $y$ = <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:180px; display:inline-block;"
+    class="form-control"
+    name="entry.2080471800"
+    placeholder="จำนวนเต็ม"
+    type="number"
+    step="1"
+    required> (1 point) [@cr-equation]{scale-by="3"}
+
+เมื่อกำหนดให้ $x=5$ จะได้ $y$ = <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:180px; display:inline-block;"
+    class="form-control"
+    name="entry.599236936"
+    placeholder="จำนวนเต็ม"
+    type="number"
+    step="1"
+    required> (1 point) [@cr-equation]{scale-by="3"}
+
+เมื่อกำหนดให้ $x=10$ จะได้ $y$ = <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:180px; display:inline-block;"
+    class="form-control"
+    name="entry.383730894"
+    placeholder="จำนวนเต็ม"
+    type="number"
+    step="1"
+    required> (1 point) [@cr-equation]{scale-by="3"}
+
+::: {#cr-equation}
+
+$3x-y=5$ 
+
+:::
+
+จากการกำหนดค่าของ $x$ และคำนวณค่าของ $y$ เราจะได้ตารางเป็นดังนี้่ [@cr-simple_equation_table]{scale-by="1.5"}
+
+::: {#cr-simple_equation_table}
+| เมื่อ $3x-y=5$
+| ----
+
+
+| | | | | | |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| $x$ | $-10$ | $-5$ | $0$ | $5$ | $10$ |
+| $y$ | $-35$ | $-20$ | $-5$ | $10$ | $25$ |
+:::
+
+@cr-situation_linear_table แต่จากบทเรียนในครั้งนี้ อาจารย์จะเขียนตารางในลักษณะแบบนี้แทนนะครับ
+
+::: {#cr-situation_linear_table}
+
+```{r}
+#| echo: false
+#| include: true
+#| warning: false
+
+library(kableExtra)
+library(DT)
+library(dplyr)
+
+dat_egg = data.frame(
+  x = c(-10,-5,0,5,10),
+  y = c(-35,-20,-5,10,25)
+)
+
+
+#dat_egg|>kable(booktabs= FALSE)
+
+dat_egg|>
+kable("html", align = "c", col.names = c("$$x$$", "$$y$$"),escape = FALSE) |>
+  kable_styling(full_width = FALSE) |>
+  column_spec(1, width = "120px") |>  
+  column_spec(2, width = "120px")
+
+
+
+#"t" = table only (ไม่มี search, ไม่มี pagination, ไม่มี info)
+#ถ้าอยากได้ table กับ info (จำนวนแถว) ใช้ "ti"
+#ถ้าอยากได้เฉพาะ table กับ search ใช้ "tf"
+
+```
+
+:::
+
+@cr-cr-situation_linear_table_pair ซึ่งในแต่ละค่าของ $x$ และ $y$ ทำให้เราได้คู่อันดับ ดังนี้
+
+::: {#cr-cr-situation_linear_table_pair}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+
+library(kableExtra)
+library(DT)
+library(dplyr)
+
+dat_egg = data.frame(
+  x = c(-10,-5,0,5,10),
+  y = c(-35,-20,-5,10,25),
+  arrow =rep("-->",5)
+)
+
+dat_egg = dat_egg |>
+mutate(pair = paste0("(",x,",",y,")"))
+
+
+#dat_egg|>kable(booktabs= FALSE)
+
+dat_egg|>
+kbl("html", align = "c", col.names = c("$$x$$", "$$y$$","","คู่อันดับ"),escape = FALSE) |>
+  kable_styling(full_width = FALSE) |>
+  column_spec(1, width = "70px") |>  
+  column_spec(2, width = "70px")|>
+  column_spec(3, width = "80px")|>
+  column_spec(4, width = "100px")|>
+  row_spec(0,extra_latex_after = "%")
+
+
+#"t" = table only (ไม่มี search, ไม่มี pagination, ไม่มี info)
+#ถ้าอยากได้ table กับ info (จำนวนแถว) ใช้ "ti"
+#ถ้าอยากได้เฉพาะ table กับ search ใช้ "tf"
+
+```
+
+:::
+
+เมื่อเรานำคู่อันดับที่ได้มาเขียนกราฟ จะได้กราฟ ดังนี้ @cr-equation_graph
+
+::: {#cr-equation_graph}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4
+
+dat_egg = data.frame(
+  x = c(-10,-5,0,5,10),
+  y = c(-35,-20,-5,10,25),
+  arrow =rep("-->",5)
+)
+
+dat_egg|>
+ggplot(aes(x=x,y=y))+
+geom_point(size = 1.5, col = "steelblue")+
+scale_y_continuous(limits =c(-50,50),breaks =seq(-50,50,10))+
+scale_x_continuous(limits =c(-20,20),breaks =seq(-20,20,5))+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=0,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_text(family="CMU Classical Serif", size = 14))+
+labs(x="X",
+y="Y")
+```
+
+:::
+
+เพื่อให้นักเรียนมองเห็นภาพได้ชัดเจนยิ่งขึ้น
+
+@cr-equation_graph2 อาจารย์จะเพิ่มเติมแกน $X$ และแกน $Y$ ลงในรูปให้นะครับ
+
+::: {#cr-equation_graph2}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4
+
+library(ggplot2)
+
+dat_egg = data.frame(
+  x = c(-10,-5,0,5,10),
+  y = c(-35,-20,-5,10,25),
+  arrow =rep("-->",5)
+)
+
+dat_egg|>
+ggplot(aes(x=x,y=y))+
+scale_y_continuous(limits =c(-50,50),breaks =seq(-50,50,10))+
+scale_x_continuous(limits =c(-20,20),breaks =seq(-20,20,5))+
+geom_segment(x=-18,y=0,xend=18,yend=0,arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "both"),
+                             size = 0.8,
+                             col = "black")+
+geom_segment(x=0,y=-45,xend=0,yend=45,arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "both"),
+                             size = 0.8,
+                             col = "black")+
+geom_point(size = 3, col = "steelblue")+
+annotate("text",x=20,y=0,label="X",family="CMU Classical Serif",size = 6)+
+annotate("text",x=0,y=50,label="Y",
+family="CMU Classical Serif",size = 6)+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=0,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_blank())
+```
+
+:::
+
+@cr-equation_graph2 จะเห็นว่า กราฟที่ได้เป็นจุดที่เรียงอยู่ในแนวเส้นตรงเดียวกัน
+
+@cr-equation_graph2 ความสัมพันธ์ของจำนวนเต็มทั้งสองนี้จึงเป็นความสัมพันธ์เชิงเส้น
+
+@cr-equation และสมการของความสัมพันธ์เชิงเส้นที่แสดงความเกี่ยวข้องระหว่างปริมาณสองปริมาณ
+
+[@cr-equation]{scale-by="3"} จะเรียกว่า **สมการเชิงเส้นสองตัวแปร (two-variable linear equation)**
+
+[@cr-linear-equation_def]{hlz="1-3"} ลักษณะสำคัญของสมการเชิงเส้นสองตัวแปร $Ax+By+C=0$ คือ
+
+[@cr-linear-equation_def]{hlz="4"}  มีตัวแปรสองตัว
+
+@cr-linear-equation_def และต้องไม่มีการคูณกันของตัวแปร
+
+@cr-linear-equation_def เลขชี้กำลังของตัวแปรแต่ละตัวต้องเป็นหนึ่ง
+
+[@cr-linear-equation_def]{hlz="6"}  $A$ และ $B$ ตัวใดตัวหนึ่งเป็นศูนย์ได้ แต่ต้องไม่เป็นศูนย์พร้อมกัน
+
+
+::: {#cr-linear-equation_def}
+
+| สมการเชิงเส้นสองตัวแปร
+| เป็นสมการที่เขียนอยู่ในรูปทั่วไปได้เป็น
+| $Ax+By+C=0$
+| เมื่อ $x,\ y$ เป็นตัวแปร
+| $A,\ B$ และ $C$ เป็นค่าคงตัว
+| โดยที่ $A$ และ $B$ ไม่เป็นศูนย์พร้อมกัน
+
+:::
+
+เมื่อนักเรียนรู้จักสมการเชิงเส้นสองตัวแปรแล้ว
+
+นักเรียนช่วยตอบคำถามให้อาจารย์หน่อยนะ
+
+ว่าสมการที่กำหนดให้ต่อไปนี้ เป็นสมการเชิงเส้นสองตัวแปร หรือไม่
+
+@cr-example_equation เมื่ออาจารย์กำหนดตัวอย่างของสมการมาดังนี้
+
+[@cr-example_equation]{hlz="1"} $5x+y+3=0$ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1159091887" 
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="เป็นสมการเชิงเส้นสองตัวแปร">เป็น</option>
+    <option value="ไม่เป็นสมการเชิงเส้นสองตัวแปร">ไม่เป็น</option>
+    <option value="20">20</option>
+  </select> สมการเชิงเส้นสองตัวแปร (1 point)
+
+[@cr-example_equation]{hlz="2"} $y-1.5x-3=0$ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.511214336" 
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="เป็นสมการเชิงเส้นสองตัวแปร">เป็น</option>
+    <option value="ไม่เป็นสมการเชิงเส้นสองตัวแปร">ไม่เป็น</option>
+    <option value="21">21</option>
+  </select> สมการเชิงเส้นสองตัวแปร (1 point)
+
+[@cr-example_equation]{hlz="3"} $x+xy=1$ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.424193311" 
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="เป็นสมการเชิงเส้นสองตัวแปร">เป็น</option>
+    <option value="ไม่เป็นสมการเชิงเส้นสองตัวแปร">ไม่เป็น</option>
+    <option value="22">22</option>
+  </select> สมการเชิงเส้นสองตัวแปร (1 point)
+
+[@cr-example_equation]{hlz="4"} $x^2-2x+1=y$ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.2006214911" 
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="เป็นสมการเชิงเส้นสองตัวแปร">เป็น</option>
+    <option value="ไม่เป็นสมการเชิงเส้นสองตัวแปร">ไม่เป็น</option>
+    <option value="23">23</option>
+  </select> สมการเชิงเส้นสองตัวแปร (1 point)
+
+[@cr-example_equation]{hlz="5"} $y=-4$ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.51887481" 
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="เป็นสมการเชิงเส้นสองตัวแปร">เป็น</option>
+    <option value="ไม่เป็นสมการเชิงเส้นสองตัวแปร">ไม่เป็น</option>
+    <option value="24">24</option>
+  </select> สมการเชิงเส้นสองตัวแปร (1 point)
+
+::: {#cr-example_equation}
+
+| 1. $5x+y+3=0$
+| 2. $y-1.5x-3=0$
+| 3. $x+xy=1$
+| 4. $x^2-2x+1=y$
+| 5. $y=-4$
+
+:::
+
+[@cr_equation_def]{pan-to="0%,-80%" scale-by="3"} กรณีที่กำหนดสมการเชิงเส้นสองตัวแปรในรูปแบบนี้
+
+[@cr_equation_def]{pan-to="0%,-80%" scale-by="3"} ถ้าไม่ระบุเงื่อนไขของ $x$ และ $y$ 
+
+[@cr_equation_def]{pan-to="0%,-80%" scale-by="3"} ให้ถือว่า $x$ และ $y$ แทนจำนวนใด ๆ และกราฟของสมการเชิงเส้นสองตัวแปรนี้
+
+[@cr_equation_def]{pan-to="0%,-80%" scale-by="3"} จะเป็นเส้นตรงที่เรียกว่า **กราฟเส้นตรง**
+
+::: {#cr_equation_def}
+
+```{mermaid}
+
+flowchart TD
+A[$$Ax+By+C=0$$]
+
+```
+
+:::
+
+ในกรณีทั่ว ๆ ไป [@cr_equation_def]{pan-to="0%,-80%" scale-by="3"} 
+
+เราสามารถเขียนกราฟของสมการนี้ เมื่อ $B\not= 0$ [@cr_equation_def]{pan-to="0%,-80%" scale-by="3"} 
+
+โดยจัดสมการให้อยู่ในรูปที่สะดวกต่อการแทนค่า $x$ เพื่อหาค่า $y$
+
+[@cr_equation_def_y_mx]{pan-to="0%,-80%" scale-by="3"} ได้ดังรูปนี้
+
+::: {#cr_equation_def_y_mx}
+
+```{mermaid}
+
+flowchart TD
+A[$$y=mx+b$$]
+
+```
+
+:::
+
+[@cr_equation_def2]{scale-by="3"} หรือกล่าวโดยสรุป
+
+::: {#cr_equation_def2}
+
+```{mermaid}
+
+flowchart TD
+A[$$Ax+By+C=0$$]
+B[$$y=mx+b$$]
+
+A -- จัดรูป --> B
+
+```
+
+:::
+
+เช่น [@cr_simplify_equation1]{scale-by="3"}
+
+::: {#cr_simplify_equation1}
+
+$2x-y=3$
+
+:::::
+
+สามารถจัดรูปได้ดังนี้
+
+[@cr_simplify_equation2]{scale-by="3"} เราต้องการให้สัมประสิทธิ์หน้าตัว $y$ เป็นบวกจึงได้
+
+::: {#cr_simplify_equation2}
+\begin{align}
+
+2x-y &= 3\\
+2x   &= 3+y\\
+
+\end{align}
+
+:::
+
+[@cr_simplify_equation3]{scale-by="3"} จากนั้น ต้องการให้ $y$ อยู่ตัวเดียว จึงได้
+
+::: {#cr_simplify_equation3}
+\begin{align}
+
+2x-y &= 3\\
+2x   &= 3+y\\
+2x-3   &= y\\
+
+\end{align}
+
+:::
+
+[@cr_simplify_equation4]{scale-by="3"} หรือบางครั้งเราเขียน 
+
+::: {#cr_simplify_equation4}
+\begin{align}
+
+2x-y &= 3\\
+2x   &= 3+y\\
+2x-3   &= y\\
+y   &= 2x-3\\
+
+\end{align}
+
+:::
+
+ดังนั้น [@cr_simplify_equation5]{scale-by="3"}
+
+::: {#cr_simplify_equation5}
+
+```{mermaid}
+
+flowchart TD
+A[$$2x-y=3$$]
+B[$$y=2x-3$$]
+
+A -- จัดรูปใหม่ได้เป็น --> B
+
+```
+
+:::
+
+@cr-teacher_talk2 ต่อไปเราจะทบทวนเกี่ยวกับการเขียนกราฟของสมการเชิงเส้นสองตัวแปรกัน
+
+@cr-teacher_talk2 เนื่องจากเราได้เรียนรู้เกี่ยวกับกราฟของคู่อันดับมาแล้ว
+
+@cr-teacher_talk2 อีกทั้งยังได้เรียนเกี่ยวกับกราฟของสมการเชิงเส้นสองตัวแปรแล้ว ซึ่งกราฟจะต้องเป็นเส้นตรง
+
+@cr-teacher_talk2 แบบฝึกหัดนี้จึงเป็นแบบฝึกหัดสุดท้ายที่อาจารย์อยากให้พวกเราช่วยอาจารย์นะครับ
+
+@cr-teacher_talk2 อาจารย์อยากทราบว่าจากสมการที่กำหนดให้จะมีกราฟตรงกับข้อใด
+
+::: {cr_graph_q1_draw}
+
+**ข้อที่ 1** กราฟของสมการ $y=2x+1$ ตรงกับตัวเลือกใด 
+
+:::
+
+@cr_1choice_a ตัวเลือก ก.
+
+
+::: {#cr_1choice_a}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4
+
+
+dat_rain = data.frame(
+  day = seq(1,10,1),
+  rain = c(25,35,40,55,60,50,45,70,65,45)
+)
+
+dat_rain|>
+ggplot(aes(x=day,y=rain))+
+#geom_point(size = 2, col = "red")+
+scale_y_continuous(limits =c(-10,10),breaks =seq(-10,10,1))+
+scale_x_continuous(limits =c(-10,10),breaks =seq(-10,10,1))+
+geom_function(
+    fun = function(x){2*x+3}, 
+    xlim = c(-8, 3.5),
+    size = 1,
+    col = "steelblue",
+    arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "both")
+  )+
+geom_segment(x=-9,y=0,xend=9,yend=0,
+size=0.8,
+col = "black",
+arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "both")
+)+
+geom_segment(x=0,y=-9,xend=0,yend=9,
+size=0.8,
+col = "black",
+arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "both")
+)+
+annotate("text",x=9.5,y=0,label="X",
+family = "CMU Classical Serif",size = 6)+
+annotate("text",x=0,y=9.5,label="Y",
+family = "CMU Classical Serif",size = 6)+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=10,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_blank(),
+plot.title = element_text(
+    family = "TH SarabunPSK",  # ใส่ชื่อฟอนต์ที่ต้องการ
+    size = 16
+  ),
+  panel.grid.minor = element_blank())
+```
+
+
+:::
+
+@cr_1choice_b ตัวเลือก ข.
+
+::: {#cr_1choice_b}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4
+
+
+dat_rain = data.frame(
+  day = seq(1,10,1),
+  rain = c(25,35,40,55,60,50,45,70,65,45)
+)
+
+dat_rain|>
+ggplot(aes(x=day,y=rain))+
+#geom_point(size = 2, col = "red")+
+scale_y_continuous(limits =c(-10,10),breaks =seq(-10,10,1))+
+scale_x_continuous(limits =c(-10,10),breaks =seq(-10,10,1))+
+geom_function(
+    fun = function(x){-2*x}, 
+    xlim = c(-6, 5),
+    size = 1,
+    col = "steelblue",
+    arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "both")
+  )+
+geom_segment(x=-9,y=0,xend=9,yend=0,
+size=0.8,
+col = "black",
+arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "both")
+)+
+geom_segment(x=0,y=-9,xend=0,yend=9,
+size=0.8,
+col = "black",
+arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "both")
+)+
+annotate("text",x=9.5,y=0,label="X",
+family = "CMU Classical Serif",size = 6)+
+annotate("text",x=0,y=9.5,label="Y",
+family = "CMU Classical Serif",size = 6)+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=10,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_blank(),
+plot.title = element_text(
+    family = "TH SarabunPSK",  # ใส่ชื่อฟอนต์ที่ต้องการ
+    size = 16
+  ),
+  panel.grid.minor = element_blank())
+
+```
+
+
+:::
+
+
+@cr_1choice_c ตัวเลือก ค.
+
+::: {#cr_1choice_c}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4
+
+
+dat_rain = data.frame(
+  day = seq(1,10,1),
+  rain = c(25,35,40,55,60,50,45,70,65,45)
+)
+
+dat_rain|>
+ggplot(aes(x=day,y=rain))+
+#geom_point(size = 2, col = "red")+
+scale_y_continuous(limits =c(-10,10),breaks =seq(-10,10,1))+
+scale_x_continuous(limits =c(-10,10),breaks =seq(-10,10,1))+
+geom_function(
+    fun = function(x){2*x+1}, 
+    xlim = c(-6, 5),
+    size = 1,
+    col = "steelblue",
+    arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "both")
+  )+
+geom_segment(x=-9,y=0,xend=9,yend=0,
+size=0.8,
+col = "black",
+arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "both")
+)+
+geom_segment(x=0,y=-9,xend=0,yend=9,
+size=0.8,
+col = "black",
+arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "both")
+)+
+annotate("text",x=9.5,y=0,label="X",
+family = "CMU Classical Serif",size = 6)+
+annotate("text",x=0,y=9.5,label="Y",
+family = "CMU Classical Serif",size = 6)+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=10,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_blank(),
+plot.title = element_text(
+    family = "TH SarabunPSK",  # ใส่ชื่อฟอนต์ที่ต้องการ
+    size = 16
+  ),
+  panel.grid.minor = element_blank())
+
+```
+
+
+:::
+
+
+@cr_1choice_d ตัวเลือก ง.
+
+::: {#cr_1choice_d}
+
+```{r}
+#| echo: false
+#| include: true
+#| class: plain
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4
+
+
+dat_rain = data.frame(
+  day = seq(1,10,1),
+  rain = c(25,35,40,55,60,50,45,70,65,45)
+)
+
+dat_rain|>
+ggplot(aes(x=day,y=rain))+
+#geom_point(size = 2, col = "red")+
+scale_y_continuous(limits =c(-10,10),breaks =seq(-10,10,1))+
+scale_x_continuous(limits =c(-10,10),breaks =seq(-10,10,1))+
+geom_function(
+    fun = function(x){x+1}, 
+    xlim = c(-9, 7),
+    size = 1,
+    col = "steelblue",
+    arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "both")
+  )+
+geom_segment(x=-9,y=0,xend=9,yend=0,
+size=0.8,
+col = "black",
+arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "both")
+)+
+geom_segment(x=0,y=-9,xend=0,yend=9,
+size=0.8,
+col = "black",
+arrow = arrow(angle = 10,
+                             type = "closed",
+                             length = unit(0.3,"cm"),
+                             ends = "both")
+)+
+annotate("text",x=9.5,y=0,label="X",
+family = "CMU Classical Serif",size = 6)+
+annotate("text",x=0,y=9.5,label="Y",
+family = "CMU Classical Serif",size = 6)+
+#theme_void()+
+theme_bw()+
+theme(plot.margin = margin(t=10,b=0,l=10,r=10,unit="pt"),
+text = element_text(family="CMU Classical Serif",size = 12),
+legend.text = element_text(family="TH SarabunPSK", size = 16),
+axis.title = element_blank(),
+plot.title = element_text(
+    family = "TH SarabunPSK",  # ใส่ชื่อฟอนต์ที่ต้องการ
+    size = 16
+  ),
+  panel.grid.minor = element_blank())
+
+```
+
+
+:::
+
+@cr-teacher_talk2 **ตอบ** <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1721172708" 
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="ก">ก.</option>
+    <option value="ข">ข.</option>
+    <option value="ค">ค.</option>
+    <option value="ง">ง.</option>
+  </select> (2 point)
+
+
+@cr-teacher_talk2 จบบทเรียนนี้แล้ว 
+
+@cr-teacher_talk2 หวังว่าทุกคนจะเข้าใจเนื้อหาและสามารถนำความรู้ไปประยุกต์ใช้ได้จริง 
+
+@cr-teacher_talk2 หากมีข้อสงสัยหรืออยากฝึกฝนเพิ่มเติม อย่าลืมกลับมาทบทวนเนื้อหาหรือสอบถามอาจารย์ได้เสมอ
+
+@cr-teacher_talk2 สำหรับบทเรียนถัดไป เราจะได้เรียนรู้เนื้อหาที่น่าสนใจและท้าทายมากขึ้น 
+
+@cr-teacher_talk2 อย่าลืมติดตามและเตรียมตัวให้พร้อม แล้วพบกันใหม่ในบทเรียนหน้า!
+
+@cr-teacher_talk2 และสุดท้าย อยากให้นักเรียนลองประเมินตนเองดูนะครับ
+
+@cr-teacher_talk2 ว่า
+"วันนี้ฉันเข้าใจบทเรียนนี้มากน้อยแค่ไหน?"
+
+@cr-teacher_talk2 ให้คะแนนตนเองในระดับ 1-5
+
+@cr-teacher_talk2 1 = ยังไม่เข้าใจเลย
+
+@cr-teacher_talk2 3 = พอเข้าใจบ้าง
+
+@cr-teacher_talk2 5 = เข้าใจดีมากและสามารถอธิบายให้เพื่อนฟังได้
+
+@cr-teacher_talk2 การประเมินตนเองจะช่วยให้ทุกคนรู้จุดที่ควรกลับไปทบทวน และเตรียมพร้อมสำหรับบทเรียนถัดไป
+
+@cr-teacher_talk2 <label for="points">คะแนนที่ให้ตนเอง คือ</label>
+<input type="range" id="points" name="entry.612095078" min="1" max="5" step="1" value="5" oninput="document.getElementById('points-value').innerText = this.value">
+<span id="points-value">5</span> คะแนน
+
+@cr-teacher_talk2 ยืนยันรหัสนักเรียน แล้วค่อยกดส่งนะ
+
+@cr-teacher_talk2 <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:200px; display:inline-block;"
+    class="form-control"
+    name="entry.1235750158"
+    placeholder="เช่น 023143"
+    type="text" required>
+<button class="btn btn-primary" type="submit">ส่งคำตอบ</button>
+
+
+:::::
+
+
+::: {.callout-warning style="font-size: 1.5em;"}
+
+ถ้ากดปุ่ม "ส่งคำตอบ" แล้วไม่มีการตอบสนอง แสดงว่ายังตอบไม่ครบ ให้กลับไปดูใหม่นะครับ
+
+
+:::
+
+<!-- ซ่อนหน้านี้ เมื่อกดส่งแล้่ว-->
+</form>
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+
+<div id="submit-message" style="display:none; color:blue; font-weight:bold; margin-top:1em;">
+  เราได้บันทึกคำตอบของคุณไว้แล้ว<br>
+  คุณสามารถกดย้อนกลับ แล้วเข้ามาที่เมนูเดิม<br>
+  เพื่อทบทวนและส่งคำตอบเพิ่มเติมได้
+</div>
+
+
+<script>
+  document.getElementById('myForm').onsubmit = function() {
+    document.getElementById('myForm').style.display = 'none';
+    document.getElementById('submit-message').style.display = 'block';
+    return true;
+  };
+</script>
+
+
+<!--ถ้าจะตั้งเวลาปิดรับฟอร์ม-->
+
+<!--
+
+
+<script>
+  // กำหนดเวลาปิดรับ (เช่น 2025-05-29 17:00:00 +07:00)
+  const closeTime = new Date("2025-06-28T13:00:00+07:00");
+
+  document.getElementById('myForm').onsubmit = function(e) {
+    const now = new Date();
+    if (now > closeTime) {
+      // ถ้าเลยเวลาปิดรับ
+      e.preventDefault(); // ไม่ให้ส่งฟอร์ม
+      document.getElementById('myForm').style.display = 'none';
+      document.getElementById('submit-message').style.display = 'block';
+      document.getElementById('submit-message').innerHTML = "ขออภัย ฟอร์มนี้ปิดรับคำตอบแล้ว";
+      return false;
+    } else {
+      // ยังไม่หมดเวลา ส่งฟอร์มตามปกติ
+      document.getElementById('myForm').style.display = 'none';
+      document.getElementById('submit-message').style.display = 'block';
+      // ข้อความที่แสดงหลังส่งฟอร์ม
+      document.getElementById('submit-message').innerHTML = "เราได้บันทึกคำตอบของคุณไว้แล้ว<br>
+      คุณสามารถกดย้อนกลับ แล้วเข้ามาที่เมนูเดิม <br>
+      เพื่อทบทวนและส่งคำตอบเพิ่มเติมได้ ";
+      return true;
+    }
+  };
+</script>
+-->
+
+
+
+
+
+<!-- progress bar-->
+<script>
+  // ระบุ id ของฟอร์ม
+  const form = document.getElementById('myForm');
+  // เลือก input และ select ทั้งหมดในฟอร์ม (ที่ต้องกรอก)
+  const requiredFields = form.querySelectorAll('input[required], select[required]');
+  const progressBar = document.getElementById('progress-bar');
+
+  function updateProgressBar() {
+    let filled = 0;
+    requiredFields.forEach(field => {
+      // สำหรับ select ให้เช็คว่า value ไม่ใช่ค่าว่าง
+      if (
+        (field.tagName === "SELECT" && field.value !== "" && field.value !== null) ||
+        (field.tagName === "INPUT" && field.value.trim() !== "")
+      ) {
+        filled += 1;
+      }
+    });
+    const percent = Math.round((filled / requiredFields.length) * 100);
+    progressBar.style.width = percent + "%";
+    progressBar.setAttribute('aria-valuenow', percent);
+    progressBar.textContent = percent + "%";
+    // เพิ่มสีเมื่อครบ 100%
+    if(percent === 100){
+      progressBar.classList.add("bg-success");
+    } else {
+      progressBar.classList.remove("bg-success");
+    }
+  }
+
+  // อัปเดต progress ทุกครั้งที่กรอกข้อมูล
+  requiredFields.forEach(field => {
+    field.addEventListener('input', updateProgressBar);
+    field.addEventListener('change', updateProgressBar);
+  });
+
+  // เรียกครั้งแรกเมื่อโหลดหน้า
+  updateProgressBar();
+</script>
+
+
+<!--เอาไว้ใช้เวลาอยากได้ว่าเริ่มทำกี่โมง-->
+<!--ใช้กับ input id="entry-timein"-->
+<!--อันนี้ format เวลาไม่ดี-->
+<!--
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+  const now = new Date().toISOString();
+  document.getElementById('entry-timein').value = now;
+});
+</script>
+-->
+
+<!-- format time ตรง google sheet-->
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+  const now = new Date();
+
+  // ดึงค่าแต่ละส่วน
+  const day = now.getDate();
+  const month = now.getMonth() + 1; // เดือนใน JS เริ่มที่ 0
+  const year = now.getFullYear();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const second = now.getSeconds();
+
+  // เติม 0 ข้างหน้าถ้าจำเป็น
+  const pad = n => n.toString().padStart(2, '0');
+
+  // สร้าง string ในรูปแบบเดียวกับ Google Form
+  const formatted = `${pad(day)}/${pad(month)}/${year} ${pad(hour)}:${pad(minute)}:${pad(second)}`;
+
+  document.getElementById('entry-timein').value = formatted;
+});
+
+</script>

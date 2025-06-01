@@ -1,0 +1,39 @@
+---
+title: "Phiriyaphong Ringrod"
+about:
+  id: hero-heading
+  template: jolla
+  image: images/prem2.JPG
+  links:
+    - icon: envelope
+      text: Email
+      href: mailto:phiriyaphong.ri.math@gmail.com
+---
+<style>
+            body {
+              font-family: 'Sarabun', sans-serif;
+              font-size: 20px;
+            }
+
+            h1 {
+              font-family: 'Sarabun', sans-serif;
+            }
+          </style>
+# ผู้พัฒนา
+
+:::{#hero-heading}
+
+## การศึกษา
+
+สาขาวิชาวิธีวิทยาการพัฒนานวัตกรรมทางการศึกษา (กลุ่มเชี่ยวชาญเฉพาะสถิติและวิทยาการทางการศึกษา) | ค.ม. | คณะครุศาสตร์ | จุฬาลงกรณ์มหาวิทยลัย | กรุงเทพมหานคร
+
+คณิตศาสตร์ (กศ.บ.) | คณะวิทยาศาสตร์
+มหาวิทยาลัยศรีนครินทรวิโรฒ | กรุงเทพมหานคร
+
+## ประสบการณ์การทำงาน
+
+โรงเรียนสาธิตมหาวิทยาลัยศรีนครินทรวิโรฒ ประสานมิตร (ฝ่ายมัธยม) | พฤษภาคม 2564 - ปัจจุบัน
+
+:::
+
+

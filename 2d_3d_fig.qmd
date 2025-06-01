@@ -1,0 +1,660 @@
+---
+#title: "กราฟและความสัมพันธ์เชิงเส้น"
+#sidebar: false
+format:
+  closeread-html:
+    theme: cosmo
+    css: styles.css
+    include-in-header: 
+      - text: |
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet">
+    cr-style:
+      narrative-background-color-overlay: "#FFFBDE"
+      narrative-text-color-overlay: "#000000"
+      narrative-border-radius: "5px"
+      narrative-background-color-sidebar: "#90D1CA"
+      narrative-text-color-sidebar: "#000000"
+      narrative-font-size: "2em"
+      section-background-color: "#FFFEFF"
+ #     section-background-color: "#F2F2F2"
+      
+---
+
+<style>
+            body {
+              font-family: 'Sarabun', sans-serif;
+            }
+
+            h1 {
+              font-family: 'Sarabun', sans-serif;
+            }
+            
+          </style>
+
+<style>
+  .progress-fixed-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 1050; /* ให้ลอยอยู่เหนือทุกอย่าง */
+  }
+  body {
+    padding-top: 28px; /* เผื่อพื้นที่ progress bar ด้านบน (ปรับตามความสูง progress bar) */
+  }
+</style>
+
+<div class="progress progress-fixed-top" style="height: 20px;">
+  <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%; font-weight:bold;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+    0%
+  </div>
+</div>
+
+
+
+```{r}
+#| echo: false
+#| include: false
+
+source("/Users/pahphrame/Library/CloudStorage/OneDrive-ChulalongkornUniversity/rpackage/premMathGrid/grid_create.R")
+
+
+```
+
+
+# รูปเรขาคณิตสองมิติและสามิติ
+
+<form id="myForm" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdwP8MfRo85IKapgAiCr5nxf3HZAJsX2UlSVipSDEYhr2mBtQ/formResponse" method="post" target="hidden_iframe">
+
+<!--ปุ่มที่ถูกซ่อน กรอกเวลาเข้าอัตโนมัติ-->
+<input type="hidden" name="entry.1569503362" id="entry-timein">
+
+::: {.callout-note icon="true"}
+## คำชี้แจง
+
+บทเรียนนี้ออกแบบมาให้นักเรียนสามารถเรียนรู้ด้วยตนเองผ่านระบบ **Scrollytelling**  
+เพียงแค่เลื่อนหน้าจอขึ้น-ลง เนื้อหาแต่ละส่วนจะปรากฏเป็นข้อความบรรยายพร้อมภาพประกอบในรูปแบบ “สติ๊กเกอร์” เพื่อช่วยให้เข้าใจเนื้อหาได้ง่ายขึ้น
+
+ระหว่างเรียน นักเรียนจะพบคำถามแทรกอยู่เป็นระยะ (8 คะแนน)กรุณาตอบคำถามให้ครบทุกข้อก่อนกดส่งคำตอบ  
+ขอให้สนุกกับการเรียนรู้ครับ!
+:::
+
+::::: {.cr-section layout="overlay-center"}
+
+## หน้าตัดของรูปเรขาคณิตสามมิติ
+
+@cr_teacher_talk สวัสดีครับนักเรียนทุกคน!
+
+@cr_teacher_talk วันนี้เราจะมาทบทวนเรื่องรูปเรขาคณิตสองมิติและสามมิติกัน
+
+@cr_teacher_talk ในบทเรียนนี้อาจารย์จะไม่ได้เน้นเนื้อหาเยอะเหมือนที่ผ่านมานะครับ
+
+@cr_teacher_talk แต่จะให้ทุกคนได้ลองตอบคำถามกันเอง
+
+@cr_teacher_talk ขอเตือนนิดนึงว่า เราจะเน้นเรื่อง 'หน้าตัด' 
+
+@cr_teacher_talk และ 'ภาพที่ได้จากการมองด้านหน้า ด้านข้าง และด้านบน' ของรูปเรขาคณิตสามมิติ
+
+@cr_teacher_talk ก่อนอื่นเหมือนเดิมครับ
+
+@cr_teacher_talk อีเมล <input
+    style="flex:0 2 70px; min-width:0; max-width:250px; width:250px; display:inline-block;"
+    class="form-control"
+    name="entry.1709155807"
+    placeholder="เช่น example@email.com"
+    type="email"
+    id="q2"
+    required>
+
+รหัสนักเรียน <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:130px; display:inline-block;"
+    class="form-control"
+    name="entry.112121212"
+    placeholder="เช่น 023143"
+    type="text"
+    id="q3"
+    required> 
+
+เป็นนักเรียน ม.$2$ ห้อง <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1435873514" id="q4"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+  </select>
+
+คำนำหน้าชื่อ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1531817060" id="q5"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="เด็กชาย">เด็กชาย</option>
+    <option value="เด็กหญิง">เด็กหญิง</option>
+    <option value="นาย">นาย</option>
+    <option value="นางสาว">นางสาว</option>
+  </select> 
+
+ชื่อ - นามสกุล 
+
+<div style="display: flex; gap: 0.1rem;">
+  <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:130px; display:inline-block;"
+    class="form-control"
+    name="entry.1237908463"
+    placeholder="ชื่อ"
+    type="text"
+    id="q6"
+    required>
+  <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:130px; display:inline-block;"
+    class="form-control"
+    name="entry.1660790025"
+    placeholder="นามสกุล"
+    type="text"
+    id="q7"
+    required>
+</div>
+
+พร้อมแล้วไปลุยกันเลยครับ!"
+
+::: {#cr_teacher_talk}
+
+![](images/2_3_d_teacher.png)
+
+:::
+
+@cr_2d_3d_fig_example เรามาดูตัวอย่างของรูปเรขาคณิตสามิติที่นักเรียนเคยเจอกันมาดีกว่า
+
+**รูปเรขาคณิต (geometric figure)** เป็นรูปที่ประกอบด้วย จุด เส้นตรง ส่วนของเส้นตรง เส้นโค้ง เป็นต้น อย่างน้อยหนึ่งอย่าง
+
+
+::: {#cr_2d_3d_fig_example}
+
+![](images/example_2_3d.png)
+
+:::
+
+[@cr_2d_fig_example]{pan-to="60%,70%" scale-by="1.5"} รูปสามเหลี่ยม (triangle) 
+
+[@cr_2d_fig_example]{pan-to="-60%,70%" scale-by="1.5"} รูปสี่เหลี่ยม (quadrilateral) 
+
+[@cr_2d_fig_example]{pan-to="60%,-70%" scale-by="1.5"} รูปหลายเหลี่ยม (polygon) 
+
+[@cr_2d_fig_example]{pan-to="-60%,-70%" scale-by="1.5"} และวงกลม (circle) 
+
+@cr_2d_fig_example เป็นตัวอย่างของ **รูปเรขาคณิตสองมิติ (two-dimentional geometric figure)**
+
+::: {#cr_2d_fig_example}
+
+![](images/2d_example.png)
+
+:::
+
+[@cr_3d_fig_example]{pan-to="80%,70%" scale-by="1.5"} ปริซึม (prism) 
+
+[@cr_3d_fig_example]{pan-to="10%,70%" scale-by="1.5"} ทรงกระบอก (cylinder) 
+
+[@cr_3d_fig_example]{pan-to="-80%,70%" scale-by="1.5"} พีระมิด (pyramid) 
+
+[@cr_3d_fig_example]{pan-to="50%,-70%" scale-by="1.5"} กรวย (cone) 
+
+[@cr_3d_fig_example]{pan-to="-50%,-70%" scale-by="1.5"} และทรงกลม (sphere) 
+
+@cr_3d_fig_example เป็นตัวอย่างของ **รูปเรขาคณิตสามมิติ (three-dimensional geometric figure)**
+
+::: {#cr_3d_fig_example}
+
+![](images/3d_fig_example.png)
+
+:::
+
+@cr_section เมื่อใช้ของมีคมตัดผ่านวัตถุให้ขาดออกจากกัน ดังรูป
+
+@cr_section บริเวณของเนื้อวัตถุที่ของมีคมผ่าน เรียกว่า **หน้าตัด**
+
+::: {#cr_section}
+
+![](images/section.png)
+
+:::
+
+@cr_section เมื่อมีรูปเรขาคณิตสามมิติ และใช้ระนาบ (plan) ตัดรูปเรขาคณิตสามมิติ 
+
+@cr_section จะได้หน้าตัด หรือในทางคณิตศาสตร์ เรียกว่า **ภาคตัด (section)** 
+
+@cr_section_plan_ex ซึ่งหน้าตัดที่ได้จากการตัด จะเป็นรูปเรขาคณิตสองมิติชนิดใด
+
+@cr_section_plan_ex ขึ้นอยู่กับ แนวการตัดของระนาบ ตำแหน่งที่ตัด และชนิดของรูปเรขาคณิตสามมิตินั้น
+
+@cr_section_plan_ex เช่น ถ้าใช้ระนาบตัดปริซึมสามเหลี่ยมในแนวตั้งฉากกับฐานที่ตำแหน่งต่าง ๆ ของปริซึม
+
+@cr_section_plan_ex จะได้หน้าตัดเป็นรูปสี่เหลี่ยมที่มีขนาดแตกต่างกัน ดังรูป
+
+::: {#cr_section_plan_ex}
+
+![](images/section_plane.png)
+
+:::
+
+@cr_section_plan_ex2 ถ้าใช้ระนาบตัดปริซึมสามเหลี่ยมในแนวขนานกับฐานที่ตำแหน่งต่าง ๆ ของปริซึม
+
+@cr_section_plan_ex2  จะได้หน้าตัดเป็นรูปสามเหลี่ยม เช่นเดียวกับฐานของปริซึม ดังรูป
+
+::: {#cr_section_plan_ex2}
+
+![](images/section_plan2.png)
+
+:::
+
+
+## ภาพด้านหน้า ภาพด้านข้าง และภาพด้านบนของรูปเรขาคณิตสามมิติ
+
+
+::: {#cr_teacher_talk}
+
+![](images/2_3_d_teacher.png)
+
+:::
+
+@cr_fst_def สำหรับการทบทวนในครั้งนี้
+
+@cr_fst_def อาจารย์กำหนดด้านหน้า
+
+@cr_fst_def ด้านข้าง
+
+@cr_fst_def และด้านบนของรูปเรขาคณิตสามมิติ ดังรูป
+
+::: {#cr_fst_def}
+
+![](images/fst_def.png)
+
+:::
+
+@cr_view_ex ถ้าเราพิจารณาการมองรูปเรขาคณิตสามมิติในทิศทางหรือแนวสายตาตั้งฉากกับด้านหน้า ด้านข้าง ด้านบน ตามลำดับ ดังรูป
+
+::: {#cr_view_ex}
+
+![](images/fst_2_ex.png)
+
+:::
+
+@cr_f_view_ex ภาพที่ได้จากการมองรูปเรขาคณิตสามมิติด้านหน้า คือ
+
+@cr_f_view_ex รูปเรขาคณิตสองมิติส่วนที่แรเงานี้ เรียกว่า **ภาพด้านหน้า (front view)**
+
+::: {#cr_f_view_ex}
+
+![](images/f_view_ex.png)
+
+:::
+
+@cr_s_view_ex ภาพที่ได้จากการมองรูปเรขาคณิตสามมิติด้านข้าง 
+
+@cr_s_view_ex คือ รูปเรขาคณิตสองมิติส่วนที่แรเงาข้างล่างนี้ เรียกว่า **ภาพด้านข้าง (side view)**
+
+::: {#cr_s_view_ex}
+
+![](images/s_view_ex.png)
+
+:::
+
+@cr_t_view_ex ภาพที่ได้จากการมองรูปเรขาคณิตสามมิติด้านบน
+
+@cr_t_view_ex คือ รูปเรขาคณิตสองมิติส่วนที่แรเงาข้างล่างนี้ เรียกว่า **ภาพด้านบน (top view)**
+
+::: {#cr_t_view_ex}
+
+![](images/t_view_ex.png)
+
+:::
+
+@cr_fst_cube_ex1 ในทำนองเดียวกันกับรูปเรขาคณิตสามมิติที่ประกอบขึ้นจากลูกบาศก์ ต่อไปนี้
+
+::: {#cr_fst_cube_ex1}
+
+![](images/fst_cube_ex1.png)
+
+:::
+
+@cr_f_cube_ex1 ทำให้เราได้ภาพด้านหน้า คือ
+
+::: {#cr_f_cube_ex1}
+
+![](images/f_cube_ex1.png)
+
+:::
+
+@cr_s_cube_ex1 ภาพด้านข้าง คือ
+
+::: {#cr_s_cube_ex1}
+
+![](images/s_cube_ex1.png)
+
+:::
+
+@cr_t_cube_ex1 และภาพด้านบน คือ
+
+::: {#cr_t_cube_ex1}
+
+![](images/t_cube_ex1.png)
+
+:::
+
+@cr_fst_cube_ex1_1 และเพื่อให้ทราบว่ามีลูกบาศก์เรียงซ้อนกันอยู่กี่ลูกในด้านที่มอง
+
+@cr_fst_cube_ex1_1 จึงเขียนตัวเลขกำกับไว้ในรูปสี่เหลี่ยมจัตุรัสนั้น ดังนี้
+
+::: {#cr_fst_cube_ex1_1}
+
+![](images/fst_cube_ex1.png)
+
+| .....
+
+![](images/fst_cube_with_number.png)
+
+
+:::
+
+
+## แบบฝึกหัด
+
+::: {#cr_teacher_talk2}
+
+![](images/2_3_d_teacher.png)
+
+:::
+
+@cr_teacher_talk2 จากการทบทวนที่ผ่านมา
+
+@cr_teacher_talk2 เรามาลองตอบคำถามเพื่อวัดความเข้าใจกันก่อนที่จบบทเรียนนะครับ
+
+@cr_teacher_talk2 จงพิจารณาว่ารูปใดเป็นภาพด้านหน้า ภาพด้านข้าง และภาพด้านบนของรูปเรขาคณิตที่กำหนดให้ในแต่ละข้อต่อไปนี้
+
+@cr_exercise1 และอย่าลืมช่วยดูให้ด้วยนะว่ารูปใดไม่ใช่ภาพจากการมองรูปเรขาคณิตสามมิตินั้น
+
+@cr_exercise1 ก. <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1088376495" id="q8"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="ภาพด้านหน้า">เป็นภาพด้านหน้า</option>
+    <option value="ภาพด้านข้าง">เป็นภาพด้านข้าง</option>
+    <option value="ภาพด้านบน">เป็นภาพด้านบน</option>
+    <option value="ไม่ใช่ภาพจากการมอง">ไม่ใช่ภาพทีได้จากการมอง</option>
+  </select> (1 point)
+
+
+@cr_exercise1 ข. <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1422840754" id="q9"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="ภาพด้านหน้า">เป็นภาพด้านหน้า</option>
+    <option value="ภาพด้านข้าง">เป็นภาพด้านข้าง</option>
+    <option value="ภาพด้านบน">เป็นภาพด้านบน</option>
+    <option value="ไม่ใช่ภาพจากการมอง">ไม่ใช่ภาพทีได้จากการมอง</option>
+  </select> (1 point)
+
+@cr_exercise1 ค. <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1614074156" id="q10"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="ภาพด้านหน้า">เป็นภาพด้านหน้า</option>
+    <option value="ภาพด้านข้าง">เป็นภาพด้านข้าง</option>
+    <option value="ภาพด้านบน">เป็นภาพด้านบน</option>
+    <option value="ไม่ใช่ภาพจากการมอง">ไม่ใช่ภาพทีได้จากการมอง</option>
+  </select> (1 point)
+
+@cr_exercise1 ง. <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1767511609" id="q11"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="ภาพด้านหน้า">เป็นภาพด้านหน้า</option>
+    <option value="ภาพด้านข้าง">เป็นภาพด้านข้าง</option>
+    <option value="ภาพด้านบน">เป็นภาพด้านบน</option>
+    <option value="ไม่ใช่ภาพจากการมอง">ไม่ใช่ภาพทีได้จากการมอง</option>
+  </select> (1 point)
+
+::: {#cr_exercise1}
+
+![](images/cube_exercise_1.png)
+
+:::
+
+@cr_exercise2 และข้อสุดท้าย
+
+
+@cr_exercise2 ก. <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1834395436" id="q12"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="ภาพด้านหน้า">เป็นภาพด้านหน้า</option>
+    <option value="ภาพด้านข้าง">เป็นภาพด้านข้าง</option>
+    <option value="ภาพด้านบน">เป็นภาพด้านบน</option>
+    <option value="ไม่ใช่ภาพจากการมอง">ไม่ใช่ภาพทีได้จากการมอง</option>
+  </select> (1 point)
+
+
+@cr_exercise2 ข. <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.332549489" id="q13"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="ภาพด้านหน้า">เป็นภาพด้านหน้า</option>
+    <option value="ภาพด้านข้าง">เป็นภาพด้านข้าง</option>
+    <option value="ภาพด้านบน">เป็นภาพด้านบน</option>
+    <option value="ไม่ใช่ภาพจากการมอง">ไม่ใช่ภาพทีได้จากการมอง</option>
+  </select> (1 point)
+
+@cr_exercise2 ค. <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1651774082" id="q14"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="ภาพด้านหน้า">เป็นภาพด้านหน้า</option>
+    <option value="ภาพด้านข้าง">เป็นภาพด้านข้าง</option>
+    <option value="ภาพด้านบน">เป็นภาพด้านบน</option>
+    <option value="ไม่ใช่ภาพจากการมอง">ไม่ใช่ภาพทีได้จากการมอง</option>
+  </select> (1 point)
+
+@cr_exercise2 ง. <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1709548650" id="q15"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="ภาพด้านหน้า">เป็นภาพด้านหน้า</option>
+    <option value="ภาพด้านข้าง">เป็นภาพด้านข้าง</option>
+    <option value="ภาพด้านบน">เป็นภาพด้านบน</option>
+    <option value="ไม่ใช่ภาพจากการมอง">ไม่ใช่ภาพทีได้จากการมอง</option>
+  </select> (1 point)
+
+::: {#cr_exercise2}
+
+![](images/cube_exercise_2.png)
+
+:::
+
+::: {#cr_teacher_talk3}
+
+![](images/2_3_d_teacher.png)
+
+:::
+
+@cr_teacher_talk3 จบบทเรียนนี้แล้ว 
+
+@cr_teacher_talk3 และสุดท้าย อยากให้นักเรียนลองประเมินตนเองดูนะครับ
+
+@cr_teacher_talk3 ว่า
+"วันนี้ฉันเข้าใจบทเรียนนี้มากน้อยแค่ไหน?"
+
+@cr_teacher_talk3 ให้คะแนนตนเองในระดับ 1-5
+
+@cr_teacher_talk3 1 = ยังไม่เข้าใจเลย
+
+@cr_teacher_talk3 3 = พอเข้าใจบ้าง
+
+@cr_teacher_talk3 5 = เข้าใจดีมากและสามารถอธิบายให้เพื่อนฟังได้
+
+
+
+@cr_teacher_talk3 <label for="points">คะแนนที่ให้ตนเอง คือ</label>
+<input type="range" id="points" name="entry.234922190" min="1" max="5" step="1" value="5" oninput="document.getElementById('points-value').innerText = this.value">
+<span id="points-value">5</span> คะแนน
+
+@cr_teacher_talk3 แล้วพบกันในชั้นเรียนครับ
+
+@cr_teacher_talk3 ยืนยันรหัสนักเรียน แล้วค่อยกดส่งนะ
+
+@cr_teacher_talk3 <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:200px; display:inline-block;"
+    class="form-control"
+    name="entry.1059943812"
+    placeholder="เช่น 023143"
+    type="text"
+    required>
+<button class="btn btn-primary" type="submit">ส่งคำตอบ</button>
+
+
+:::::
+
+::: {.callout-warning style="font-size: 1.5em;"}
+
+ถ้ากดปุ่ม "ส่งคำตอบ" แล้วไม่มีการตอบสนอง แสดงว่ายังตอบไม่ครบ ให้กลับไปดูใหม่นะครับ
+
+
+:::
+
+<!-- ซ่อนหน้านี้ เมื่อกดส่งแล้่ว-->
+</form>
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+
+<div id="submit-message" style="display:none; color:blue; font-weight:bold; margin-top:1em;">
+  เราได้บันทึกคำตอบของคุณไว้แล้ว<br>
+  คุณสามารถกดย้อนกลับ แล้วเข้ามาที่เมนูเดิม<br>
+  เพื่อทบทวนและส่งคำตอบเพิ่มเติมได้
+</div>
+
+
+<script>
+  document.getElementById('myForm').onsubmit = function() {
+    document.getElementById('myForm').style.display = 'none';
+    document.getElementById('submit-message').style.display = 'block';
+    return true;
+  };
+</script>
+
+
+<!--ถ้าจะตั้งเวลาปิดรับฟอร์ม-->
+
+<!--
+
+
+<script>
+  // กำหนดเวลาปิดรับ (เช่น 2025-05-29 17:00:00 +07:00)
+  const closeTime = new Date("2025-06-28T13:00:00+07:00");
+
+  document.getElementById('myForm').onsubmit = function(e) {
+    const now = new Date();
+    if (now > closeTime) {
+      // ถ้าเลยเวลาปิดรับ
+      e.preventDefault(); // ไม่ให้ส่งฟอร์ม
+      document.getElementById('myForm').style.display = 'none';
+      document.getElementById('submit-message').style.display = 'block';
+      document.getElementById('submit-message').innerHTML = "ขออภัย ฟอร์มนี้ปิดรับคำตอบแล้ว";
+      return false;
+    } else {
+      // ยังไม่หมดเวลา ส่งฟอร์มตามปกติ
+      document.getElementById('myForm').style.display = 'none';
+      document.getElementById('submit-message').style.display = 'block';
+      // ข้อความที่แสดงหลังส่งฟอร์ม
+      document.getElementById('submit-message').innerHTML = "เราได้บันทึกคำตอบของคุณไว้แล้ว<br>
+      คุณสามารถกดย้อนกลับ แล้วเข้ามาที่เมนูเดิม <br>
+      เพื่อทบทวนและส่งคำตอบเพิ่มเติมได้ ";
+      return true;
+    }
+  };
+</script>
+-->
+
+
+
+
+
+<!-- progress bar-->
+<script>
+  // ระบุ id ของฟอร์ม
+  const form = document.getElementById('myForm');
+  // เลือก input และ select ทั้งหมดในฟอร์ม (ที่ต้องกรอก)
+  const requiredFields = form.querySelectorAll('input[required], select[required]');
+  const progressBar = document.getElementById('progress-bar');
+
+  function updateProgressBar() {
+    let filled = 0;
+    requiredFields.forEach(field => {
+      // สำหรับ select ให้เช็คว่า value ไม่ใช่ค่าว่าง
+      if (
+        (field.tagName === "SELECT" && field.value !== "" && field.value !== null) ||
+        (field.tagName === "INPUT" && field.value.trim() !== "")
+      ) {
+        filled += 1;
+      }
+    });
+    const percent = Math.round((filled / requiredFields.length) * 100);
+    progressBar.style.width = percent + "%";
+    progressBar.setAttribute('aria-valuenow', percent);
+    progressBar.textContent = percent + "%";
+    // เพิ่มสีเมื่อครบ 100%
+    if(percent === 100){
+      progressBar.classList.add("bg-success");
+    } else {
+      progressBar.classList.remove("bg-success");
+    }
+  }
+
+  // อัปเดต progress ทุกครั้งที่กรอกข้อมูล
+  requiredFields.forEach(field => {
+    field.addEventListener('input', updateProgressBar);
+    field.addEventListener('change', updateProgressBar);
+  });
+
+  // เรียกครั้งแรกเมื่อโหลดหน้า
+  updateProgressBar();
+</script>
+
+
+<!--เอาไว้ใช้เวลาอยากได้ว่าเริ่มทำกี่โมง-->
+<!--ใช้กับ input id="entry-timein"-->
+<!--อันนี้ format เวลาไม่ดี-->
+<!--
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+  const now = new Date().toISOString();
+  document.getElementById('entry-timein').value = now;
+});
+</script>
+-->
+
+<!-- format time ตรง google sheet-->
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+  const now = new Date();
+
+  // ดึงค่าแต่ละส่วน
+  const day = now.getDate();
+  const month = now.getMonth() + 1; // เดือนใน JS เริ่มที่ 0
+  const year = now.getFullYear();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const second = now.getSeconds();
+
+  // เติม 0 ข้างหน้าถ้าจำเป็น
+  const pad = n => n.toString().padStart(2, '0');
+
+  // สร้าง string ในรูปแบบเดียวกับ Google Form
+  const formatted = `${pad(day)}/${pad(month)}/${year} ${pad(hour)}:${pad(minute)}:${pad(second)}`;
+
+  document.getElementById('entry-timein').value = formatted;
+});
+
+</script>

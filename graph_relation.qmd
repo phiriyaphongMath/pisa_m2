@@ -1,0 +1,1537 @@
+---
+#title: "กราฟและความสัมพันธ์เชิงเส้น"
+#sidebar: false
+format:
+  closeread-html:
+    theme: cosmo
+    css: styles.css
+    include-in-header: 
+      - text: |
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet">
+    cr-style:
+      narrative-background-color-overlay: "#FFFBDE"
+      narrative-text-color-overlay: "#000000"
+      narrative-border-radius: "5px"
+      narrative-background-color-sidebar: "#90D1CA"
+      narrative-text-color-sidebar: "#000000"
+      narrative-font-size: "2em"
+      section-background-color: "#FFFEFF"
+ #     section-background-color: "#000000"
+      
+---
+
+<style>
+            body {
+              font-family: 'Sarabun', sans-serif;
+            }
+
+            h1 {
+              font-family: 'Sarabun', sans-serif;
+            }
+          </style>
+
+<style>
+  .progress-fixed-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 1050; /* ให้ลอยอยู่เหนือทุกอย่าง */
+  }
+  body {
+    padding-top: 40px; /* เผื่อพื้นที่ progress bar ด้านบน (ปรับตามความสูง progress bar) */
+  }
+</style>
+
+<div class="progress progress-fixed-top" style="height: 20px;">
+  <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%; font-weight:bold;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+    0%
+  </div>
+</div>
+
+
+
+# คู่อันดับและกราฟ
+
+<form id="myForm" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdW_nq2BFNCjxIcdt8rYXAhfW9FmLLjSiOxOTvkqsVpajyfxA/formResponse" method="post" target="hidden_iframe">
+
+<!--ปุ่มที่ถูกซ่อน กรอกเวลาเข้าอัตโนมัติ-->
+<input type="hidden" name="entry.598653304" id="entry-timein">
+
+::: {.callout-note icon="true" style="font-size: 3em;"}
+## คำชี้แจง
+
+บทเรียนนี้ออกแบบมาให้นักเรียนสามารถเรียนรู้ด้วยตนเองผ่านระบบ **Scrollytelling**  
+เพียงแค่เลื่อนหน้าจอขึ้น-ลง เนื้อหาแต่ละส่วนจะปรากฏเป็นข้อความบรรยายพร้อมภาพประกอบในรูปแบบ “สติ๊กเกอร์” เพื่อช่วยให้เข้าใจเนื้อหาได้ง่ายขึ้น
+
+ระหว่างเรียน นักเรียนจะพบคำถามแทรกอยู่เป็นระยะ กรุณาตอบคำถามให้ครบทุกข้อก่อนกดส่งคำตอบ (30 คะแนน) 
+ขอให้สนุกกับการเรียนรู้ครับ!
+:::
+
+:::: {.cr-section layout="overlay-center"}
+@cr-teacher_talk วันนี้เราจะมาทบทวนเรื่องคู่อันดับและกราฟ
+
+@cr-teacher_talk  โดยก่อนที่เราจะเริ่มทบทวนบทเรียนกันในวันนี้
+
+@cr-teacher_talk  อาจารย์อยากทราบข้อมูลส่วนตัวของนักเรียนสักหน่อย
+
+@cr-teacher_talk อีเมล <input
+    style="flex:0 2 70px; min-width:0; max-width:250px; width:250px; display:inline-block;"
+    class="form-control"
+    name="entry.319615652"
+    placeholder="เช่น example@email.com"
+    type="email"
+    required>
+
+@cr-teacher_talk รหัสนักเรียน <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:130px; display:inline-block;"
+    class="form-control"
+    name="entry.1066291048"
+    placeholder="เช่น 023143"
+    type="text"
+    required> 
+
+@cr-teacher_talk เป็นนักเรียน ม.$2$ ห้อง <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1627216010"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+  </select>
+
+@cr-teacher_talk คำนำหน้าชื่อ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1601363213"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="เด็กชาย">เด็กชาย</option>
+    <option value="เด็กหญิง">เด็กหญิง</option>
+    <option value="นาย">นาย</option>
+    <option value="นางสาว">นางสาว</option>
+  </select> 
+
+@cr-teacher_talk ชื่อ - นามสกุล 
+
+<div style="display: flex; gap: 0.1rem;">
+  <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:130px; display:inline-block;"
+    class="form-control"
+    name="entry.460492632"
+    placeholder="ชื่อ"
+    type="text"
+    required>
+  <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:130px; display:inline-block;"
+    class="form-control"
+    name="entry.299843855"
+    placeholder="นามสกุล"
+    type="text"
+    required>
+</div>
+
+@cr-teacher_talk เรามาเริ่มกันเลยดีกว่า
+
+
+::: {#cr-teacher_talk}
+
+![](images/teacher_intro.png)
+
+:::
+
+
+@cr-intro_fig ในชีวิตประจำวันเราพบสิ่งที่มีความเกี่ยวข้องกันอยู่เสมอ
+
+@cr-intro_fig เช่น สินค้ากับราคาสินค้า ดังสถานการณ์ต่อไปนี้
+
+@cr-intro_fig ในวันสถาปนาโรงเรียนแห่งหนึ่ง นักเรียนชั้น ม.1 กับจุ๊บแจง ช่วยกันเปิดร้านขายลูกชิ้นปิ้ง โดยตกลงจะขายในราคาไม้ละ $10$ บาท
+
+::: {#cr-intro_fig}
+![](images/relation_graph_intro.png)
+:::
+
+จุ๊บแจงจึงเขียนตารางแสดง
+
+@cr-table1 จำนวนลูกชิ้นเป็นไม้ และราคาเป็นบาท ได้ดังนี้
+
+แต่จากราคาที่จุ๊บแจงเขียนมีอยู่ช่องหนึ่งที่ไม่ทราบว่าราคาเท่าใด [@cr-table1]{pan-to="-70%,-70%" scale-by="2.5"}
+
+นักเรียนช่วยจุ๊บแจงเติมตารางให้สมบูรณ์หน่อยนะ @cr-table1
+
+@cr-table1 ค่าของ ❓ คือ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.506245557"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="35">$35$</option>
+    <option value="40">$40$</option>
+    <option value="45">$45$</option>
+    <option value="50">$50$</option>
+  </select> (1 point)
+
+::: {#cr-table1}
+| **จำนวนลูกชิ้น (ไม้)** | **ราคาขาย (บาท)** |
+|:------:|:------:|
+|   $1$  |   $10$  |
+|   $2$  |   $20$   |
+|   $3$  |   $30$   |
+|   $4$  |   ❓   |
+::: 
+
+ตารางข้างต้นนี้ แสดงความสัมพันธ์ระหว่างปริมาณสองปริมาณ คือ
+
+จำนวนลูกชิ้นปิ้งกับราคาขาย 
+
+ซึ่งถ้าจับคู่ระหว่างจำนวนลูกชิ้นปิ้งกับราคาขาย จะได้
+
+$1$ คู่กับ $10$ [@cr-table1]{pan-to="0%,100%" scale-by="2.5"}
+
+$2$ คู่กับ $20$ [@cr-table1]{pan-to="0%,80%" scale-by="2.5"}
+
+[@cr-table1]{pan-to="0%,-80%" scale-by="2.5"} $3$ คู่กับ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1217633327"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="20">$20$</option>
+    <option value="30">$30$</option>
+    <option value="40">$40$</option>
+    <option value="50">$50$</option>
+  </select> (1 point)
+
+และ\ [@cr-table1]{pan-to="0%,-100%" scale-by="2.5"}  $4$ คู่กับ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.2062078663"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="20">$20$</option>
+    <option value="30">$30$</option>
+    <option value="40">$40$</option>
+    <option value="50">$50$</option>
+  </select> (1 point)
+
+เราอาจเขียนแผนภาพการจับคู่ระหว่างปริมาณทั้งสองได้ ดังนี้
+
+$1$ คู่กับ $10$ @cr-diagram1
+
+$2$ คู่กับ $20$ @cr-diagram2
+
+$3$ คู่กับ $30$ @cr-diagram3
+
+$4$ คู่กับ $40$ @cr-diagram4
+
+
+
+::: {#cr-diagram1}
+![](images/diagram1_label.svg)
+:::
+
+::: {#cr-diagram2}
+![](images/diagram2_label.svg)
+:::
+
+::: {#cr-diagram3}
+![](images/diagram3_label.svg)
+:::
+
+::: {#cr-diagram4}
+![](images/diagram4_label.svg)
+:::
+
+
+นอกจากนี้เรายังสามารถเขียนแสดงการจับคู่ดังกล่าวโดยใช้สัญลักษณ์ ได้เป็น
+
+$1$ คู่กับ $10$ @cr-coor1
+
+$2$ คู่กับ $20$ @cr-coor2
+
+$3$ คู่กับ $30$ @cr-coor3
+
+และ
+
+$4$ คู่กับ $40$ @cr-coor4
+
+[@cr-coor4]{pan-to="-80%,0%" scale-by="3"} ❓ คือคู่อันดับ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.419324394"
+  required>
+    <option value="" disabled selected>เลือก</option>
+    <option value="(40,4)">$(40,\ 4)$</option>
+    <option value="(4,40)">$(4,\ 40)$</option>
+  </select> (1 point)
+
+:::{#cr-coor1}
+
+$(1,\ 10)$
+
+:::
+
+::: {#cr-coor2}
+
+$(1,\ 10),\ (2,\ 20)$
+
+:::
+
+
+::: {#cr-coor3}
+
+$(1,\ 10),\ (2,\ 20),\ (3,\ 30)$
+
+:::
+
+
+::: {#cr-coor4}
+
+$(1,\ 10),\ (2,\ 20), \ (3,\ 30)$ และ ❓
+
+:::
+
+สัญลักษณ์ [@cr-co-ab]{scale-by="3"}
+
+เมื่อ $a$ และ $b$ แทนจำนวนใด ๆ [@cr-co-ab]{scale-by="4"}
+
+เรียกว่า [@cr-co-ab2]{hlz="3"}
+
+อ่านว่า [@cr-co-ab2]{hlz="4"}
+
+
+::: {#cr-co-ab}
+$(a,\ b)$ 
+:::
+
+::: {#cr-co-ab2}
+| ...
+| $(a,\ b)$ 
+| คู่อันดับ (ordered pare)
+| "คู่อันดับ เอ บี"
+:::
+
+เมื่อ $a$ คือ **สมาชิกตัวที่หนึ่ง** ของคู่อันดับ [@cr-co-ab]{pan-to="-100%,0%" scale-by="5"}
+
+$b$ คือ **สมาชิกตัวที่สอง** ของคู่อันดับ [@cr-co-ab]{pan-to="100%,0%" scale-by="5"}
+
+เมื่อต้องการแสดงการจับคู่ระหว่างสมาชิกของกลุ่มสองกลุ่ม [@cr-co-ab]{scale-by="3"}
+
+จะต้องมีข้อตกลงว่า [@cr-co-ab]{scale-by="3"}
+
+สมาชิกตัวที่หนึ่งและสมาชิกตัวที่สองของคู่อันดับมาจากกลุ่มใด [@cr-co-ab]{scale-by="3"}
+
+จากตัวอย่างที่ผ่านมา @cr-co-ab
+
+สมาชิกตัวที่หนึ่งของคู่อันดับมาจากกลุ่มของจำนวนลูกชิ้นปิ้ง @cr-co-ab
+
+สมาชิกตัวที่สองของคู่อันดับมาจากกลุ่มของราคาขาย @cr-co-ab
+
+เช่น 
+
+[@cr-co-1-10]{scale-by="2"} มีความหมายว่า
+
+[@cr-co-1-10]{scale-by="2"} <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1587048620" required>
+<option value="" disabled selected>เลือก</option>
+<option value="ลูกชิ้นปิ้ง">ลูกชิ้นปิ้ง</option>
+<option value="ขายในราคา">ขายในราคา</option>
+</select> $\ 1\ $ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.978438777" required>
+<option value="" disabled selected>เลือก</option>
+<option value="ไม้">ไม้</option>
+<option value="บาท">บาท</option>
+</select> (2 point)
+
+
+[@cr-co-1-10]{scale-by="2"} <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.848365343" required>
+<option value="" disabled selected>เลือก</option>
+<option value="ลูกชิ้นปิ้ง">ลูกชิ้นปิ้ง</option>
+<option value="ขายในราคา">ขายในราคา</option>
+</select> $\ 10\ $ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.33773629" required>
+<option value="" disabled selected>เลือก</option>
+<option value="ไม้">ไม้</option>
+<option value="บาท">บาท</option>
+</select> (2 point)
+
+::: {#cr-co-1-10}
+$(1,\ 10)$ 
+:::
+
+แต่
+
+[@cr-co-10-1]{scale-by="2"} มีความหมายว่า
+
+[@cr-co-10-1]{scale-by="2"} <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.522514122" required>
+<option value="" disabled selected>เลือก</option>
+<option value="ลูกชิ้นปิ้ง">ลูกชิ้นปิ้ง</option>
+<option value="ขายในราคา">ขายในราคา</option>
+</select> $\ 10\ $ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.934097606" required>
+<option value="" disabled selected>เลือก</option>
+<option value="ไม้">ไม้</option>
+<option value="บาท">บาท</option>
+</select> (2 point)
+
+[@cr-co-10-1]{scale-by="2"} <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.514356349" required>
+<option value="" disabled selected>เลือก</option>
+<option value="ลูกชิ้นปิ้ง">ลูกชิ้นปิ้ง</option>
+<option value="ขายในราคา">ขายในราคา</option>
+</select> $\ 1\ $ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.738201429" required>
+<option value="" disabled selected>เลือก</option>
+<option value="ไม้">ไม้</option>
+<option value="บาท">บาท</option>
+</select> (2 point)
+
+
+::: {#cr-co-10-1}
+$(10,\ 1)$ 
+:::
+
+
+นอกจากนี้เรายังสามารถ 
+
+เขียนแสดงความสัมพันธ์เหล่านี้ในรูปกราฟได้ด้วย @cr-grid_explore
+
+ในการใช้กราฟแสดงความสัมพันธ์ @cr-grid_explore
+
+เราเขียนเส้นจำนวนในแนวนอนและแนวตั้งให้ตัดกันเป็นมุมฉากที่ตำแหน่งของจุดที่แทนศูนย์ ($0$) บนเส้นจำนวนแต่ละเส้น @cr-grid_explore
+
+
+
+```{r}
+#| echo: false
+#| include: false
+
+source("/Users/pahphrame/Library/CloudStorage/OneDrive-ChulalongkornUniversity/rpackage/premMathGrid/grid_create.R")
+
+
+```
+
+::: {#cr-grid_explore}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+
+library(latex2exp)
+
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif"
+)+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))
+
+```
+
+:::
+
+@cr-grid_explore_origin จุดที่เส้นจำนวนทั้งสองตัดกัน เรียกว่า <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1787501944" required>
+<option value="" disabled selected>เลือก</option>
+<option value="จุดศูนย์กลาง">จุดศูนย์กลาง</option>
+<option value="จุดยอด">จุดยอด</option>
+<option value="จุดกำเนิด">จุดกำเนิด</option>
+<option value="จุดปลาย">จุดปลาย</option>
+</select> (1 point)
+
+::: {#cr-grid_explore_origin}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif"
+)+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=0,y=0),size = 4)+
+geom_segment(x=0.4,y=0.4,xend=2,yend=2,
+arrow = arrow(angle = 20,type = "closed",length = unit(0.3,"cm"),ends = "first"),
+size = 0.5,
+col = "red")+
+annotate("text",x=2.5,y=2.5,label="จุดตรงนี้",
+family ="TH SarabunPSK",
+size = 16)
+
+```
+
+:::
+
+
+@cr-grid_explore_X_axis เส้นจำนวนในแนวนอน เรียกว่า **แกนนอน (horizotal axis)** 
+
+@cr-grid_explore_X_axis หรือ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.42178944" required>
+<option value="" disabled selected>เลือก</option>
+<option value="แกน X">แกน X</option>
+<option value="แกน Y">แกน Y</option>
+</select> (1 point)
+
+
+
+
+::: {#cr-grid_explore_X_axis}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif"
+)+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_segment(x=-4.5,y=0,xend=4.5,yend=0,
+arrow = arrow(angle = 20,type = "closed",length = unit(0.3,"cm"),ends = "both"),
+size = 2,
+col = "red")+
+annotate("text",x=2.5,y=0.5,label="เส้นนี้",
+family ="TH SarabunPSK",
+size = 16)
+
+```
+
+:::
+
+และ @cr-grid_explore_X_axis
+
+@cr-grid_explore_Y_axis เส้นจำนวนในแนวตั้ง เรียกว่า แกนตั้ง (**vertical axis**)
+
+@cr-grid_explore_Y_axis หรือ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.2054753028" required>
+<option value="" disabled selected>เลือก</option>
+<option value="แกน X">แกน X</option>
+<option value="แกน Y">แกน Y</option>
+</select> (1 point)
+
+::: {#cr-grid_explore_Y_axis}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif"
+)+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_segment(x=0,y=-4.5,xend=0,yend=4.5,
+arrow = arrow(angle = 20,type = "closed",length = unit(0.3,"cm"),ends = "both"),
+size = 2,
+col = "red")+
+annotate("text",x=1.5,y=2.5,label="เส้นนี้",
+family ="TH SarabunPSK",
+size = 16)
+
+```
+
+:::
+
+@cr-grid_explore แกน $X$ และแกน $Y$ อยู่บนระนาบเดียวกัน 
+
+@cr-grid_explore_quadrant และแบ่งระนาบออกเป็นสี่ส่วน ดังนี้
+
+::: {#cr-grid_explore_quadrant}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif"
+)+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_segment(x=0,y=-4.5,xend=0,yend=4.5,
+arrow = arrow(angle = 20,type = "closed",length = unit(0.3,"cm"),ends = "both"),
+size = 2,
+col = "red")+
+annotate("label",x=2.5,y=2.5,label="ส่วนที่ 1",
+family ="TH SarabunPSK",
+size = 16)+
+annotate("label",x=-2.5,y=2.5,label="ส่วนที่ 2",
+family ="TH SarabunPSK",
+size = 16)+
+annotate("label",x=-2.5,y=-2.5,label="ส่วนที่ 3",
+family ="TH SarabunPSK",
+size = 16)+
+annotate("label",x=2.5,y=-2.5,label="ส่วนที่ 4",
+family ="TH SarabunPSK",
+size = 16)
+
+```
+
+:::
+
+
+เรียกแต่ละส่วนว่า **จตุภาค (quadrant)**
+
+[@cr-grid_explore_quadrant]{pan-to="-50%,50%" scale-by="1.5"} โดยส่วนที่ $1$ เรียกว่า <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1304321338" required>
+<option value="" disabled selected>เลือก</option>
+<option value="จตุภาคที่ 1">จตุภาคที่ 1</option>
+<option value="จตุภาคที่ 2">จตุภาคที่ 2</option>
+<option value="จตุภาคที่ 3">จตุภาคที่ 3</option>
+<option value="จตุภาคที่ 4">จตุภาคที่ 4</option>
+</select> (1 point)
+
+
+[@cr-grid_explore_quadrant]{pan-to="50%,50%" scale-by="1.5"} ส่วนที่ $2$ เรียกว่า <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.35682702" required>
+<option value="" disabled selected>เลือก</option>
+<option value="จตุภาคที่ 1">จตุภาคที่ 1</option>
+<option value="จตุภาคที่ 2">จตุภาคที่ 2</option>
+<option value="จตุภาคที่ 3">จตุภาคที่ 3</option>
+<option value="จตุภาคที่ 4">จตุภาคที่ 4</option>
+</select> (1 point)
+
+[@cr-grid_explore_quadrant]{pan-to="50%,-50%" scale-by="1.5"} ส่วนที่ $3$ เรียกว่า <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1628721522" required>
+<option value="" disabled selected>เลือก</option>
+<option value="จตุภาคที่ 1">จตุภาคที่ 1</option>
+<option value="จตุภาคที่ 2">จตุภาคที่ 2</option>
+<option value="จตุภาคที่ 3">จตุภาคที่ 3</option>
+<option value="จตุภาคที่ 4">จตุภาคที่ 4</option>
+</select> (1 point)
+
+
+[@cr-grid_explore_quadrant]{pan-to="-50%,-50%" scale-by="1.5"} และส่วนที่ $4$ เรียกว่า <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.511410833" required>
+<option value="" disabled selected>เลือก</option>
+<option value="จตุภาคที่ 1">จตุภาคที่ 1</option>
+<option value="จตุภาคที่ 2">จตุภาคที่ 2</option>
+<option value="จตุภาคที่ 3">จตุภาคที่ 3</option>
+<option value="จตุภาคที่ 4">จตุภาคที่ 4</option>
+</select> (1 point)
+
+@cr-grid_explore ซึ่งระบบที่แสดงตำแหน่งของจุดต่าง ๆ นี้ เรียกว่า **ระบบพิกัดฉาก (rectangular system)**
+
+@cr-grid_explore ซึ่งในระบบพิกัดฉาก เราสามารถแทนคู่อันดับแต่ละคู่อันดับด้วยจุดบนระนาบ 
+
+@cr-grid_explore เรียกจุดนี้ว่า **กราฟของคู่อันดับ**
+
+@cr-grid_point เช่น กราฟของ $(2,\ 3)$ เป็นดังรูป
+
+
+
+
+::: {#cr-grid_point}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=1,axis_no_y=1,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=2,y=3),size = 6, col ="red")+
+annotate("text",x=3.3,y=3,label=TeX(r"($(2, \3)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)
+
+```
+
+:::
+
+@cr-grid_point2_line เป็นจุดที่ได้จากการลากเส้นตรงให้ตั้งฉากกับแกน $X$ ที่ตำแหน่งของ $2$ 
+
+
+::: {#cr-grid_point2_line}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=1,axis_no_y=1,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=2,y=3),size = 6, col ="red")+
+annotate("text",x=3.3,y=3,label=TeX(r"($(2, \3)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_segment(x=2,y=0,xend=2,yend=4,linetype="dashed",linewidth = 1,col = "#21D15B")
+
+```
+
+:::
+
+@cr-grid_point3_line ไปตัดกับเส้นตรงที่ลากตั้งฉากกับแกน $Y$ ที่ตำแหน่งของ $3$
+
+@cr-grid_point3_line  ซึ่งจะทำให้ได้ว่าจุดนี้อยู่ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.308578089" required>
+<option value="" disabled selected>เลือก</option>
+<option value="จตุภาคที่ 1">ในจตุภาคที่ 1</option>
+<option value="จตุภาคที่ 2">ในจตุภาคที่ 2</option>
+<option value="จตุภาคที่ 3">ในจตุภาคที่ 3</option>
+<option value="จตุภาคที่ 4">ในจตุภาคที่ 4</option>
+<option value="แกน X">บนแกน X</option>
+<option value="แกน Y">บนแกน Y</option>
+<option value="จุดกำเนิด">ที่จุดกำเนิด</option>
+</select> (1 point)
+
+::: {#cr-grid_point3_line}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=1,axis_no_y=1,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+annotate("text",x=3.3,y=2.3,label=TeX(r"($(2, \3)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_segment(x=2,y=0,xend=2,yend=4,linetype="dashed",linewidth = 1,col = "#21D15B")+
+geom_segment(x=0,y=3,xend=3.5,yend=3,linetype="dashed",linewidth = 1,col = "#21D15B")+
+geom_point(aes(x=2,y=3),size = 6, col ="red")
+
+```
+
+:::
+
+@cr-grid_point2 ในทำนองเดียวกันกับกราฟของ $(-3,\ 2)$ เป็นดังรูป
+
+@cr-grid_point2 ซึ่งจะทำให้ได้ว่าจุดนี้อยู่ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1495550303" required>
+<option value="" disabled selected>เลือก</option>
+<option value="จตุภาคที่ 1">ในจตุภาคที่ 1</option>
+<option value="จตุภาคที่ 2">ในจตุภาคที่ 2</option>
+<option value="จตุภาคที่ 3">ในจตุภาคที่ 3</option>
+<option value="จตุภาคที่ 4">ในจตุภาคที่ 4</option>
+<option value="แกน X">บนแกน X</option>
+<option value="แกน Y">บนแกน Y</option>
+<option value="จุดกำเนิด">ที่จุดกำเนิด</option>
+</select> (1 point)
+
+::: {#cr-grid_point2}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=1,axis_no_y=1,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=-3,y=2),size = 6, col ="red")+
+annotate("text",x=-2,y=2.5,label=TeX(r"($(-3, \2)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)
+
+```
+
+:::
+
+แต่สำหรับกราฟที่มีจุดอยู่ในตำแหน่ง เช่น 
+
+@cr-grid_point_on_axis $(-2,0)$ "จุด $(-2,0)$"
+
+@cr-grid_point_on_axis $(0,3)$ "จุด $(0,3)$"
+
+@cr-grid_point_on_axis หรือ $(0,0)$ "จุด $(0,0)$"
+
+@cr-grid_point_on_axis เราถือว่าจุดนั้นไม่อยู่ในจตุภาคใด ๆ 
+
+::: {#cr-grid_point_on_axis}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=1,axis_no_y=1,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=-2,y=0),size = 6, col ="red")+
+annotate("text",x=-2,y=0.5,label=TeX(r"($(-2, \0)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 5)+
+geom_point(aes(x=0,y=3),size = 6, col ="red")+
+annotate("text",x=1,y=3,label=TeX(r"($(0, \3)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 5)+
+geom_point(aes(x=0,y=0),size = 6, col ="red")+
+annotate("text",x=1,y=0.5,label=TeX(r"($(0, \0)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 5)
+
+```
+
+:::
+
+@cr-grid_point_on_axis1 โดยที่ จุด $(-2,\ 0)$ อยู่ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1652032801" required>
+<option value="" disabled selected>เลือก</option>
+<option value="จตุภาคที่ 1">ในจตุภาคที่ 1</option>
+<option value="จตุภาคที่ 2">ในจตุภาคที่ 2</option>
+<option value="จตุภาคที่ 3">ในจตุภาคที่ 3</option>
+<option value="จตุภาคที่ 4">ในจตุภาคที่ 4</option>
+<option value="แกน X">บนแกน X</option>
+<option value="แกน Y">บนแกน Y</option>
+<option value="จุดกำเนิด">ที่จุดกำเนิด</option>
+</select> (1 point)
+
+
+::: {#cr-grid_point_on_axis1}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=1,axis_no_y=1,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=-2,y=0),size = 12, col ="#21D15B")+
+annotate("text",x=-2,y=0.5,label=TeX(r"($(-2, \0)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 5)+
+geom_point(aes(x=0,y=3),size = 6, col ="red")+
+annotate("text",x=1,y=3,label=TeX(r"($(0, \3)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 5)+
+geom_point(aes(x=0,y=0),size = 6, col ="red")+
+annotate("text",x=1,y=0.5,label=TeX(r"($(0, \0)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 5)
+
+```
+
+:::
+
+@cr-grid_point_on_axis2 จุด $(0,\ 3)$ อยู่ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1679815519" required>
+<option value="" disabled selected>เลือก</option>
+<option value="จตุภาคที่ 1">ในจตุภาคที่ 1</option>
+<option value="จตุภาคที่ 2">ในจตุภาคที่ 2</option>
+<option value="จตุภาคที่ 3">ในจตุภาคที่ 3</option>
+<option value="จตุภาคที่ 4">ในจตุภาคที่ 4</option>
+<option value="แกน X">บนแกน X</option>
+<option value="แกน Y">บนแกน Y</option>
+<option value="จุดกำเนิด">ที่จุดกำเนิด</option>
+</select> (1 point)
+
+
+::: {#cr-grid_point_on_axis2}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=1,axis_no_y=1,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=-2,y=0),size = 6, col ="red")+
+annotate("text",x=-2,y=0.5,label=TeX(r"($(-2, \0)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 5)+
+geom_point(aes(x=0,y=3),size = 12, col ="#21D15B")+
+annotate("text",x=1,y=3,label=TeX(r"($(0, \3)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 5)+
+geom_point(aes(x=0,y=0),size = 6, col ="red")+
+annotate("text",x=1,y=0.5,label=TeX(r"($(0, \0)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 5)
+
+```
+
+:::
+
+
+@cr-grid_point_on_axis3 และ จุด $(0,\ 0)$ อยู่ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.577650699" required>
+<option value="" disabled selected>เลือก</option>
+<option value="จตุภาคที่ 1">ในจตุภาคที่ 1</option>
+<option value="จตุภาคที่ 2">ในจตุภาคที่ 2</option>
+<option value="จตุภาคที่ 3">ในจตุภาคที่ 3</option>
+<option value="จตุภาคที่ 4">ในจตุภาคที่ 4</option>
+<option value="แกน X">บนแกน X</option>
+<option value="แกน Y">บนแกน Y</option>
+<option value="จุดกำเนิด">ที่จุดกำเนิด</option>
+</select> (1 point)
+
+
+::: {#cr-grid_point_on_axis3}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=1,axis_no_y=1,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=-2,y=0),size = 6, col ="red")+
+annotate("text",x=-2,y=0.5,label=TeX(r"($(-2, \0)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 5)+
+geom_point(aes(x=0,y=3),size = 6, col ="red")+
+annotate("text",x=1,y=3,label=TeX(r"($(0, \3)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 5)+
+geom_point(aes(x=0,y=0),size = 12, col ="#21D15B")+
+annotate("text",x=1,y=0.5,label=TeX(r"($(0, \0)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 5)
+
+```
+
+:::
+
+บางครั้งเรามีการตั้งชื่อจุดให้กับกราฟของคู่อันดับ
+
+@cr-grid_point2_1 เช่น จุด $P$ เป็นจุดหนึ่งบนระนาบที่เป็นกราฟของ $(-3, 2)$
+
+เราจะบอกว่า จุด $P$ มีพิกัดคือ $(-3, 2)$
+
+อาจเขียนแทนด้วย $P(-3, 2)$ 
+
+ซึ่งกราฟของจุด $P$ อาจเขียนได้ ดังนี้
+
+@cr-grid_point2_2 หรือ 
+
+::: {#cr-grid_point2_1}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=1,axis_no_y=1,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=-3,y=2),size = 6, col ="red")+
+annotate("text",x=-2,y=2.5,label=TeX(r"($(-3, \2)$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)
+
+```
+
+:::
+
+::: {#cr-grid_point2_2}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no_with_tick_no(xmin=-4,xmax=4,ymin=-4,ymax=4,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=1,axis_no_y=1,
+minor_grid_linewidth=0,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=-3,y=2),size = 6, col ="red")+
+annotate("text",x=-2.5,y=2.5,label=TeX(r"($P$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)
+
+```
+
+:::
+
+@cr-grid_point3 ดังนั้น เมื่อกำหนดจุดบนระนาบมาให้
+
+@cr-grid_point3 เราจึงสามารถหาพิกัดของจุดนั้นได้ด้วย
+
+
+::: {#cr-grid_point3}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no(xmin=-7,xmax=7,ymin=-7,ymax=7,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=2,axis_no_y=2,
+minor_grid_linewidth=0.1,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=4,y=5),size = 4, col ="red")+
+annotate("text",x=4.5,y=5,label=TeX(r"($A$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=0,y=-1),size = 4, col ="red")+
+annotate("text",x=0.5,y=-1,label=TeX(r"($B$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-4,y=0),size = 4, col ="red")+
+annotate("text",x=-4,y=1.5,label=TeX(r"($C$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=5,y=-3),size = 4, col ="red")+
+annotate("text",x=5.5,y=-3,label=TeX(r"($D$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-6,y=-2),size = 4, col ="red")+
+annotate("text",x=-6.5,y=-2,label=TeX(r"($E$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-1,y=5),size = 4, col ="red")+
+annotate("text",x=-0.5,y=5,label=TeX(r"($F$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)
+
+```
+
+:::
+
+@cr-grid_point3_A เช่น จุด $A$ มีพิกัด คือ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1763082779" required>
+<option value="" disabled selected>เลือก</option>
+<option value="(4,5)">(4,5)</option>
+<option value="(5,4)">(5,4)</option>
+<option value="(-1,0)">(-1,0)</option>
+<option value="(0,-1)">(0,-1)</option>
+<option value="(-4,0)">(-4,0)</option>
+<option value="(0,-4)">(0,-4)</option>
+<option value="(-3,5)">(-3,5)</option>
+<option value="(5,-3)">(5,-3)</option>
+<option value="(-6,-2)">(-6,-2)</option>
+<option value="(-2,-6)">(-2,-6)</option>
+<option value="(-1,5)">(-1,5)</option>
+<option value="(5,-1)">(5,-1)</option>
+</select> (1 point)
+
+
+::: {#cr-grid_point3_A}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no(xmin=-7,xmax=7,ymin=-7,ymax=7,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=2,axis_no_y=2,
+minor_grid_linewidth=0.1,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=4,y=5),size = 10, col ="#21D15B")+
+annotate("text",x=4.5,y=5,label=TeX(r"($A$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=0,y=-1),size = 4, col ="red")+
+annotate("text",x=0.5,y=-1,label=TeX(r"($B$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-4,y=0),size = 4, col ="red")+
+annotate("text",x=-4,y=1.5,label=TeX(r"($C$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=5,y=-3),size = 4, col ="red")+
+annotate("text",x=5.5,y=-3,label=TeX(r"($D$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-6,y=-2),size = 4, col ="red")+
+annotate("text",x=-6.5,y=-2,label=TeX(r"($E$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-1,y=5),size = 4, col ="red")+
+annotate("text",x=-0.5,y=5,label=TeX(r"($F$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)
+
+```
+
+:::
+
+@cr-grid_point3_B จุด $B$ มีพิกัด คือ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.869936440" required>
+<option value="" disabled selected>เลือก</option>
+<option value="(4,5)">(4,5)</option>
+<option value="(5,4)">(5,4)</option>
+<option value="(-1,0)">(-1,0)</option>
+<option value="(0,-1)">(0,-1)</option>
+<option value="(-4,0)">(-4,0)</option>
+<option value="(0,-4)">(0,-4)</option>
+<option value="(-3,5)">(-3,5)</option>
+<option value="(5,-3)">(5,-3)</option>
+<option value="(-6,-2)">(-6,-2)</option>
+<option value="(-2,-6)">(-2,-6)</option>
+<option value="(-1,5)">(-1,5)</option>
+<option value="(5,-1)">(5,-1)</option>
+</select> (1 point)
+
+
+::: {#cr-grid_point3_B}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no(xmin=-7,xmax=7,ymin=-7,ymax=7,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=2,axis_no_y=2,
+minor_grid_linewidth=0.1,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=4,y=5),size = 4, col ="red")+
+annotate("text",x=4.5,y=5,label=TeX(r"($A$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=0,y=-1),size = 10, col ="#21D15B")+
+annotate("text",x=0.5,y=-1,label=TeX(r"($B$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-4,y=0),size = 4, col ="red")+
+annotate("text",x=-4,y=1.5,label=TeX(r"($C$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=5,y=-3),size = 4, col ="red")+
+annotate("text",x=5.5,y=-3,label=TeX(r"($D$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-6,y=-2),size = 4, col ="red")+
+annotate("text",x=-6.5,y=-2,label=TeX(r"($E$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-1,y=5),size = 4, col ="red")+
+annotate("text",x=-0.5,y=5,label=TeX(r"($F$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)
+
+```
+
+:::
+
+
+@cr-grid_point3_C จุด $C$ มีพิกัด คือ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1575799586" required>
+<option value="" disabled selected>เลือก</option>
+<option value="(4,5)">(4,5)</option>
+<option value="(5,4)">(5,4)</option>
+<option value="(-1,0)">(-1,0)</option>
+<option value="(0,-1)">(0,-1)</option>
+<option value="(-4,0)">(-4,0)</option>
+<option value="(0,-4)">(0,-4)</option>
+<option value="(-3,5)">(-3,5)</option>
+<option value="(5,-3)">(5,-3)</option>
+<option value="(-6,-2)">(-6,-2)</option>
+<option value="(-2,-6)">(-2,-6)</option>
+<option value="(-1,5)">(-1,5)</option>
+<option value="(5,-1)">(5,-1)</option>
+</select> (1 point)
+
+
+::: {#cr-grid_point3_C}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no(xmin=-7,xmax=7,ymin=-7,ymax=7,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=2,axis_no_y=2,
+minor_grid_linewidth=0.1,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=4,y=5),size = 4, col ="red")+
+annotate("text",x=4.5,y=5,label=TeX(r"($A$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=0,y=-1),size = 4, col ="red")+
+annotate("text",x=0.5,y=-1,label=TeX(r"($B$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-4,y=0),size = 10, col ="#21D15B")+
+annotate("text",x=-4,y=1.5,label=TeX(r"($C$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=5,y=-3),size = 4, col ="red")+
+annotate("text",x=5.5,y=-3,label=TeX(r"($D$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-6,y=-2),size = 4, col ="red")+
+annotate("text",x=-6.5,y=-2,label=TeX(r"($E$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-1,y=5),size = 4, col ="red")+
+annotate("text",x=-0.5,y=5,label=TeX(r"($F$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)
+
+```
+
+:::
+
+
+@cr-grid_point3_D จุด $D$ มีพิกัด คือ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.937637574" required>
+<option value="" disabled selected>เลือก</option>
+<option value="(4,5)">(4,5)</option>
+<option value="(5,4)">(5,4)</option>
+<option value="(-1,0)">(-1,0)</option>
+<option value="(0,-1)">(0,-1)</option>
+<option value="(-4,0)">(-4,0)</option>
+<option value="(0,-4)">(0,-4)</option>
+<option value="(-3,5)">(-3,5)</option>
+<option value="(5,-3)">(5,-3)</option>
+<option value="(-6,-2)">(-6,-2)</option>
+<option value="(-2,-6)">(-2,-6)</option>
+<option value="(-1,5)">(-1,5)</option>
+<option value="(5,-1)">(5,-1)</option>
+</select> (1 point)
+
+
+::: {#cr-grid_point3_D}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no(xmin=-7,xmax=7,ymin=-7,ymax=7,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=2,axis_no_y=2,
+minor_grid_linewidth=0.1,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=4,y=5),size = 4, col ="red")+
+annotate("text",x=4.5,y=5,label=TeX(r"($A$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=0,y=-1),size = 4, col ="red")+
+annotate("text",x=0.5,y=-1,label=TeX(r"($B$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-4,y=0),size = 4, col ="red")+
+annotate("text",x=-4,y=1.5,label=TeX(r"($C$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=5,y=-3),size = 10, col ="#21D15B")+
+annotate("text",x=5.5,y=-3,label=TeX(r"($D$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-6,y=-2),size = 4, col ="red")+
+annotate("text",x=-6.5,y=-2,label=TeX(r"($E$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-1,y=5),size = 4, col ="red")+
+annotate("text",x=-0.5,y=5,label=TeX(r"($F$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)
+
+```
+
+:::
+
+
+@cr-grid_point3_E จุด $E$ มีพิกัด คือ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.396690352" required>
+<option value="" disabled selected>เลือก</option>
+<option value="(4,5)">(4,5)</option>
+<option value="(5,4)">(5,4)</option>
+<option value="(-1,0)">(-1,0)</option>
+<option value="(0,-1)">(0,-1)</option>
+<option value="(-4,0)">(-4,0)</option>
+<option value="(0,-4)">(0,-4)</option>
+<option value="(-3,5)">(-3,5)</option>
+<option value="(5,-3)">(5,-3)</option>
+<option value="(-6,-2)">(-6,-2)</option>
+<option value="(-2,-6)">(-2,-6)</option>
+<option value="(-1,5)">(-1,5)</option>
+<option value="(5,-1)">(5,-1)</option>
+</select> (1 point)
+
+
+::: {#cr-grid_point3_E}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no(xmin=-7,xmax=7,ymin=-7,ymax=7,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=2,axis_no_y=2,
+minor_grid_linewidth=0.1,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=4,y=5),size = 4, col ="red")+
+annotate("text",x=4.5,y=5,label=TeX(r"($A$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=0,y=-1),size = 4, col ="red")+
+annotate("text",x=0.5,y=-1,label=TeX(r"($B$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-4,y=0),size = 4, col ="red")+
+annotate("text",x=-4,y=1.5,label=TeX(r"($C$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=5,y=-3),size = 4, col ="red")+
+annotate("text",x=5.5,y=-3,label=TeX(r"($D$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-6,y=-2),size = 10, col ="#21D15B")+
+annotate("text",x=-6.5,y=-2,label=TeX(r"($E$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-1,y=5),size = 4, col ="red")+
+annotate("text",x=-0.5,y=5,label=TeX(r"($F$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)
+
+```
+
+:::
+
+
+@cr-grid_point3_F จุด $F$ มีพิกัด คือ <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.1765032122" required>
+<option value="" disabled selected>เลือก</option>
+<option value="(4,5)">(4,5)</option>
+<option value="(5,4)">(5,4)</option>
+<option value="(-1,0)">(-1,0)</option>
+<option value="(0,-1)">(0,-1)</option>
+<option value="(-4,0)">(-4,0)</option>
+<option value="(0,-4)">(0,-4)</option>
+<option value="(-3,5)">(-3,5)</option>
+<option value="(5,-3)">(5,-3)</option>
+<option value="(-6,-2)">(-6,-2)</option>
+<option value="(-2,-6)">(-2,-6)</option>
+<option value="(-1,5)">(-1,5)</option>
+<option value="(5,-1)">(5,-1)</option>
+</select> (1 point)
+
+
+::: {#cr-grid_point3_F}
+
+```{r}
+#| warning: false
+#| fig-width: 8
+#| fig-height: 8
+grid_no(xmin=-7,xmax=7,ymin=-7,ymax=7,
+size_axis_x_no=6,size_axis_y_no=6,axis_no_x=2,axis_no_y=2,
+minor_grid_linewidth=0.1,
+x_axis_label_size=8,y_axis_label_size=8,family="CMU Classical Serif")+
+theme_void()+
+theme(plot.margin = margin(t=0,b=0,l=0,r=0,unit="pt"))+
+geom_point(aes(x=4,y=5),size = 4, col ="red")+
+annotate("text",x=4.5,y=5,label=TeX(r"($A$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=0,y=-1),size = 4, col ="red")+
+annotate("text",x=0.5,y=-1,label=TeX(r"($B$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-4,y=0),size = 4, col ="red")+
+annotate("text",x=-4,y=1.5,label=TeX(r"($C$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=5,y=-3),size = 4, col ="red")+
+annotate("text",x=5.5,y=-3,label=TeX(r"($D$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-6,y=-2),size = 4, col ="red")+
+annotate("text",x=-6.5,y=-2,label=TeX(r"($E$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)+
+geom_point(aes(x=-1,y=5),size = 10, col ="#21D15B")+
+annotate("text",x=-0.5,y=5,label=TeX(r"($F$)",output="character"), parse=TRUE,
+family ="CMU Classical Serif",
+size = 8)
+
+```
+
+:::
+
+@cr-relation_intro_end_fig หลังจากเรียนแล้ว 
+
+@cr-relation_intro_end_fig ช่วยให้คะแนนตนเองด้วยนะ
+
+@cr-relation_intro_end_fig ถ้า $1$ คะแนน หมายถึง ยังไม่ค่อยเข้าใจ
+
+@cr-relation_intro_end_fig ถ้า $5$ คะแนน หมายถึง เข้าใจเป็นอย่างมาก
+
+<label for="points">คะแนนที่ให้ตนเอง คือ</label>
+<input type="range" id="points" name="entry.1377473037" min="1" max="5" step="1" value="5" oninput="document.getElementById('points-value').innerText = this.value">
+<span id="points-value">5</span> คะแนน
+
+
+@cr-relation_intro_end_fig จากการทบทวนเรื่องคู่อันดับและกราฟในครั้งนี้
+
+@cr-relation_intro_end_fig อาจารย์หวังว่าเนื้อหาที่ได้เรียนไปจะช่วยให้นักเรียนเข้าใจและเห็นภาพชัดเจนมากยิ่งขึ้น
+
+@cr-relation_intro_end_fig อย่าลืมติดตามบทเรียนถัดไปด้วยนะครับ 
+
+::: {#cr-relation_intro_end_fig}
+![](images/relation_intro_end.png)
+:::
+
+@cr-relation_intro_end_fig ยืนยันรหัสนักเรียน แล้วค่อยกดส่งนะ
+
+@cr-relation_intro_end_fig <input
+    style="flex:0 2 70px; min-width:0; max-width:200px; width:200px; display:inline-block;"
+    class="form-control"
+    name="entry.2050578665"
+    placeholder="เช่น 023143"
+    type="text"
+    required>
+<button class="btn btn-primary" type="submit">ส่งคำตอบ</button>
+
+::::
+
+::: {.callout-warning style="font-size: 1.5em;"}
+
+ถ้ากดปุ่ม "ส่งคำตอบ" แล้วไม่มีการตอบสนอง แสดงว่ายังตอบไม่ครบ ให้กลับไปดูใหม่นะครับ
+
+
+:::
+
+<!-- ซ่อนหน้านี้ เมื่อกดส่งแล้่ว-->
+</form>
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+<div id="submit-message" style="display:none; color:blue; font-weight:bold; margin-top:1em;">
+  เราได้บันทึกคำตอบของคุณไว้แล้ว
+  
+  คุณสามารถกดย้อนกลับ แล้วเข้ามาที่เมนูเดิม 
+  
+  เพื่อทบทวนและส่งคำตอบเพิ่มเติมได้ 
+</div>
+
+
+
+<!--ใช้เมื่อไม่มีการตั้งเวลาปิดฟอร์ม-->
+<script>
+  // เมื่อฟอร์มถูก submit
+  document.getElementById('myForm').onsubmit = function() {
+    // ซ่อนฟอร์ม
+    document.getElementById('myForm').style.display = 'none';
+    // แสดงข้อความ
+    document.getElementById('submit-message').style.display = 'block';
+    // ยังให้ฟอร์มส่งข้อมูลไป Google Form ตามปกติ
+    return true;
+  };
+</script>
+
+
+<!--ถ้าจะตั้งเวลาปิดรับฟอร์ม-->
+
+
+<!--
+
+<script>
+  // กำหนดเวลาปิดรับ (เช่น 2025-05-29 17:00:00 +07:00)
+  const closeTime = new Date("2025-05-28T13:00:00+07:00");
+
+  document.getElementById('myForm').onsubmit = function(e) {
+    const now = new Date();
+    if (now > closeTime) {
+      // ถ้าเลยเวลาปิดรับ
+      e.preventDefault(); // ไม่ให้ส่งฟอร์ม
+      document.getElementById('myForm').style.display = 'none';
+      document.getElementById('submit-message').style.display = 'block';
+      document.getElementById('submit-message').innerHTML = "ขออภัย ฟอร์มนี้ปิดรับคำตอบแล้ว";
+      return false;
+    } else {
+      // ยังไม่หมดเวลา ส่งฟอร์มตามปกติ
+      document.getElementById('myForm').style.display = 'none';
+      document.getElementById('submit-message').style.display = 'block';
+      // ข้อความที่แสดงหลังส่งฟอร์ม
+      document.getElementById('submit-message').innerHTML = "เราได้บันทึกคำตอบของคุณไว้แล้ว<br>
+      คุณสามารถกดย้อนกลับ แล้วเข้ามาที่เมนูเดิม <br>
+      เพื่อทบทวนและส่งคำตอบเพิ่มเติมได้ ";
+      return true;
+    }
+  };
+</script>
+
+
+-->
+
+
+
+<!-- progress bar-->
+<script>
+  // ระบุ id ของฟอร์ม
+  const form = document.getElementById('myForm');
+  // เลือก input และ select ทั้งหมดในฟอร์ม (ที่ต้องกรอก)
+  const requiredFields = form.querySelectorAll('input[required], select[required]');
+  const progressBar = document.getElementById('progress-bar');
+
+  function updateProgressBar() {
+    let filled = 0;
+    requiredFields.forEach(field => {
+      // สำหรับ select ให้เช็คว่า value ไม่ใช่ค่าว่าง
+      if (
+        (field.tagName === "SELECT" && field.value !== "" && field.value !== null) ||
+        (field.tagName === "INPUT" && field.value.trim() !== "")
+      ) {
+        filled += 1;
+      }
+    });
+    const percent = Math.round((filled / requiredFields.length) * 100);
+    progressBar.style.width = percent + "%";
+    progressBar.setAttribute('aria-valuenow', percent);
+    progressBar.textContent = percent + "%";
+    // เพิ่มสีเมื่อครบ 100%
+    if(percent === 100){
+      progressBar.classList.add("bg-success");
+    } else {
+      progressBar.classList.remove("bg-success");
+    }
+  }
+
+  // อัปเดต progress ทุกครั้งที่กรอกข้อมูล
+  requiredFields.forEach(field => {
+    field.addEventListener('input', updateProgressBar);
+    field.addEventListener('change', updateProgressBar);
+  });
+
+  // เรียกครั้งแรกเมื่อโหลดหน้า
+  updateProgressBar();
+</script>
+
+
+<!--เอาไว้ใช้เวลาอยากได้ว่าเริ่มทำกี่โมง-->
+<!--ใช้กับ input id="entry-timein"-->
+<!--อันนี้ format เวลาไม่ดี-->
+<!--
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+  const now = new Date().toISOString();
+  document.getElementById('entry-timein').value = now;
+});
+</script>
+-->
+
+<!-- format time ตรง google sheet-->
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+  const now = new Date();
+
+  // ดึงค่าแต่ละส่วน
+  const day = now.getDate();
+  const month = now.getMonth() + 1; // เดือนใน JS เริ่มที่ 0
+  const year = now.getFullYear();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const second = now.getSeconds();
+
+  // เติม 0 ข้างหน้าถ้าจำเป็น
+  const pad = n => n.toString().padStart(2, '0');
+
+  // สร้าง string ในรูปแบบเดียวกับ Google Form
+  const formatted = `${pad(day)}/${pad(month)}/${year} ${pad(hour)}:${pad(minute)}:${pad(second)}`;
+
+  document.getElementById('entry-timein').value = formatted;
+});
+
+</script>
+
+
+
