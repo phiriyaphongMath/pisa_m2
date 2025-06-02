@@ -1,0 +1,225 @@
+---
+#title: "การแก้ปัญหาทางคณิตศาสตร์อย่างฉลาดรู้ 2"
+format: html
+---
+
+<style>
+            body {
+              font-family: 'Sarabun', sans-serif;
+              font-size: 20px;
+            }
+
+            h1 {
+              font-family: 'Sarabun', sans-serif;
+            }
+          </style>
+
+
+
+# ตรวจสอบผลการส่งงานทบทวนบทเรียน
+
+```{ojs}
+//| echo: false
+//| include: true
+
+url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR2-K4lGGtGKwhd5rwwW81P5kzXjqGdldz2fmwELjJygKx-eZufT7zpW4WeJGF4pQkM-hvQz14WZ6N4/pub?gid=1283478074&single=true&output=csv"
+
+```
+
+```{ojs}
+//| echo: false
+//| include: true
+
+
+viewof search = {
+  // สร้าง input ด้วย Inputs.text
+  const inputDiv = Inputs.text({label: "ค้นหาด้วยรหัสนักเรียน", placeholder: "เช่น 013342"});
+  // ดึง input element จริง ๆ ออกมา (อยู่ใน div)
+  const input = inputDiv.querySelector('input[type="text"]');
+  // ปรับแต่ง style ตามต้องการ
+  input.style.borderRadius = "5px";
+  input.style.padding = "2px";
+  input.style.fontSize = "1.1em";
+  input.style.textAlign = "center";
+  input.style.border = "2px solidrgb(0, 0, 0)";
+  input.style.width = "100%";
+  // return div ที่มี label กับ input
+  return inputDiv;
+}
+
+```
+
+
+```{ojs}
+//| echo: false
+//| include: false
+
+
+sheet = await d3.csv(url)
+
+filtered = sheet.filter(function(d){
+    return d.stu_id == (search === "" ? "1" : search)
+})
+
+
+
+```
+
+
+
+```{ojs}
+//| echo: false
+//| include: true
+
+
+html`
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th style="width:60%">หัวข้อ</th>
+      <th style="width:40%">รายละเอียด</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ห้อง</td>
+      <td>${filtered.map(d => "ม.2 ห้อง " + d.class).join(", ")}</td>
+    </tr>
+    <tr>
+      <td>เลขที่</td>
+      <td>${filtered.map(d => d.no).join(", ")}</td>
+    </tr>
+    <tr>
+      <td>ชื่อ - นามสกุล</td>
+      <td>${filtered.map(d => d.name + " " + d.lname).join(", ")}</td>
+    </tr>
+    <tr>
+      <th colspan="2">ผลการส่งงานทบทวนบทเรียน</th>
+    </tr>
+    <tr>
+      <td>กราฟและความสัมพันธ์เชิงเส้น ครั้งที่ 1</td>
+      <td>
+        ${filtered.map(d => 
+          d.status_1 === "ทำแล้ว" 
+            ? `<span class="text-success">${d.status_1}</span>` 
+            : d.status_1 === "ยังไม่ได้ทำ"
+              ? `<span class="text-danger">${d.status_1}</span>`
+              : d.status_1
+        ).join(", ")}
+      </td>
+    </tr>
+    <tr>
+      <td>กราฟและความสัมพันธ์เชิงเส้น ครั้งที่ 2</td>
+      <td>
+        ${filtered.map(d => 
+          d.status_2 === "ทำแล้ว" 
+            ? `<span class="text-success">${d.status_2}</span>` 
+            : d.status_2 === "ยังไม่ได้ทำ"
+              ? `<span class="text-danger">${d.status_2}</span>`
+              : d.status_2
+        ).join(", ")}
+      </td>
+    </tr>
+    <tr>
+      <td>รูปเรขาคณิตสองมิติและสามมิติ</td>
+      <td>
+        ${filtered.map(d => 
+          d.status_3 === "ทำแล้ว" 
+            ? `<span class="text-success">${d.status_3}</span>` 
+            : d.status_3 === "ยังไม่ได้ทำ"
+              ? `<span class="text-danger">${d.status_3}</span>`
+              : d.status_3
+        ).join(", ")}
+      </td>
+    </tr>
+  </tbody>
+</table>
+`
+
+
+```
+
+<!--ไม่เอา ลองเล่นโค้ดเฉย ๆ-->
+
+```{ojs}
+//| echo: false
+//| include: false
+
+html`
+<style>
+  table.custom-table {
+    border-collapse: collapse;
+    width: 100%; /* หรือกำหนดความกว้างเฉพาะเจาะจง เช่น 600px */
+  }
+  table.custom-table th, table.custom-table td {
+    border: 1px solid #333;
+    padding: 6px 12px;
+    text-align: left;
+  }
+  table.custom-table th {
+    background: #f2f2f2;
+  }
+  /* กำหนดความกว้างเฉพาะคอลัมน์ */
+  table.custom-table th.stu_id, table.custom-table td.stu_id { width: 80px; }
+  table.custom-table th.name, table.custom-table td.name { width: 150px; }
+  table.custom-table th.status_1, table.custom-table td.status_1 { width: 100px; }
+</style>
+<table class="custom-table">
+  <thead>
+    <tr>
+      <th class="stu_id">stu_id</th>
+      <th class="name">name</th>
+      <th class="status_1">status_1</th>
+    </tr>
+  </thead>
+  <tbody>
+    ${filtered.map(d => 
+      `<tr>
+        <td class="stu_id">${d.stu_id}</td>
+        <td class="name">${d.name}</td>
+        <td class="status_1">${d.status_1}</td>
+      </tr>`
+    ).join("")}
+  </tbody>
+</table>
+`
+
+```
+
+
+<!--เวลาจะอ่านข้อมูลแล้วแสดงทั้งหมด พร้อมกับ transpose ด้วย-->
+
+```{ojs}
+//| echo: false
+//| include: false
+
+transpose = (data) => {
+  if (!data.length) return [];
+  const keys = Object.keys(data[0]);
+  return keys.map(key => [key, ...data.map(row => row[key])]);
+}
+
+
+
+transposed = transpose(filtered)
+
+html`
+<table class="custom-table" border="1" cellpadding="6" style="border-collapse:collapse;">
+  <thead>
+        <tr>
+            <th> หัวข้อ </th>
+            <th> รายละเอียด </th>
+        </tr>
+  <thead>
+  <tbody>
+    ${transposed.map(row => `
+      <tr>
+        ${row.map(cell => `<td>${cell}</td>`).join("")}
+      </tr>
+    `).join("")}
+  </tbody>
+</table>
+`
+
+
+```
