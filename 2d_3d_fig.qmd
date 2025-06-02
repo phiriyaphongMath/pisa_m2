@@ -73,7 +73,7 @@ source("/Users/pahphrame/Library/CloudStorage/OneDrive-ChulalongkornUniversity/r
 <!--ปุ่มที่ถูกซ่อน กรอกเวลาเข้าอัตโนมัติ-->
 <input type="hidden" name="entry.1569503362" id="entry-timein">
 
-::: {.callout-note icon="true"}
+::: {.callout-note icon="true" style="font-size: 3em;"}
 ## คำชี้แจง
 
 บทเรียนนี้ออกแบบมาให้นักเรียนสามารถเรียนรู้ด้วยตนเองผ่านระบบ **Scrollytelling**  

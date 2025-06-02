@@ -74,7 +74,7 @@ source("/Users/pahphrame/Library/CloudStorage/OneDrive-ChulalongkornUniversity/r
 <input type="hidden" name="entry.671352720" id="entry-timein">
 
 
-::: {.callout-note icon="true"}
+::: {.callout-note icon="true" style="font-size: 3em;"}
 ## คำชี้แจง
 
 บทเรียนนี้ออกแบบมาให้นักเรียนสามารถเรียนรู้ด้วยตนเองผ่านระบบ **Scrollytelling**  
