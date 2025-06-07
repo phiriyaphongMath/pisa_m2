@@ -176,13 +176,13 @@ window.Quarto = {
       <!-- user-provided yaml closeread style options -->
       <style>
         :root {
-          --cr-narrative-background-color-overlay: #FFFBDE;
---cr-narrative-background-color-sidebar: #90D1CA;
---cr-narrative-text-color-overlay: #000000;
---cr-section-background-color: #FFFEFF;
+          --cr-narrative-font-size: 2em;
 --cr-narrative-text-color-sidebar: #000000;
+--cr-narrative-background-color-sidebar: #90D1CA;
 --cr-narrative-border-radius: 5px;
---cr-narrative-font-size: 2em;
+--cr-section-background-color: #FFFEFF;
+--cr-narrative-text-color-overlay: #000000;
+--cr-narrative-background-color-overlay: #FFFBDE;
         }
       </style>
     
@@ -278,11 +278,6 @@ window.Quarto = {
 <div class="trigger new-trigger" data-focus-on="cr-teacher_talk">
 <div class="narrative">
 <p>อาจารย์อยากทราบข้อมูลส่วนตัวของนักเรียนสักหน่อย เช่นเดิม</p>
-</div>
-</div>
-<div class="trigger new-trigger" data-focus-on="cr-teacher_talk">
-<div class="narrative">
-<p>อีเมล <input style="flex:0 2 70px; min-width:0; max-width:250px; width:250px; display:inline-block;" class="form-control" name="entry.415967528" placeholder="เช่น example@email.com" type="email" required=""></p>
 </div>
 </div>
 <div class="trigger new-trigger" data-focus-on="cr-teacher_talk">
@@ -898,32 +893,32 @@ window.Quarto = {
 <p><span class="math inline">\(y=-4\)</span> <select style="flex:1; min-width:0; display:inline-block; width:auto;" class="form-select" name="entry.51887481" required=""> <option value="" disabled="" selected="">เลือก</option> <option value="เป็นสมการเชิงเส้นสองตัวแปร">เป็น</option> <option value="ไม่เป็นสมการเชิงเส้นสองตัวแปร">ไม่เป็น</option> </select> สมการเชิงเส้นสองตัวแปร (1 point)</p>
 </div>
 </div>
-<div class="trigger new-trigger" data-pan-to="0%,-80%" data-focus-on="cr_equation_def" data-scale-by="3">
+<div class="trigger new-trigger" data-scale-by="3" data-pan-to="0%,-80%" data-focus-on="cr_equation_def">
 <div class="narrative">
 <p>กรณีที่กำหนดสมการเชิงเส้นสองตัวแปรในรูปแบบนี้</p>
 </div>
 </div>
-<div class="trigger new-trigger" data-pan-to="0%,-80%" data-focus-on="cr_equation_def" data-scale-by="3">
+<div class="trigger new-trigger" data-scale-by="3" data-pan-to="0%,-80%" data-focus-on="cr_equation_def">
 <div class="narrative">
 <p>ถ้าไม่ระบุเงื่อนไขของ <span class="math inline">\(x\)</span> และ <span class="math inline">\(y\)</span></p>
 </div>
 </div>
-<div class="trigger new-trigger" data-pan-to="0%,-80%" data-focus-on="cr_equation_def" data-scale-by="3">
+<div class="trigger new-trigger" data-scale-by="3" data-pan-to="0%,-80%" data-focus-on="cr_equation_def">
 <div class="narrative">
 <p>ให้ถือว่า <span class="math inline">\(x\)</span> และ <span class="math inline">\(y\)</span> แทนจำนวนใด ๆ และกราฟของสมการเชิงเส้นสองตัวแปรนี้</p>
 </div>
 </div>
-<div class="trigger new-trigger" data-pan-to="0%,-80%" data-focus-on="cr_equation_def" data-scale-by="3">
+<div class="trigger new-trigger" data-scale-by="3" data-pan-to="0%,-80%" data-focus-on="cr_equation_def">
 <div class="narrative">
 <p>จะเป็นเส้นตรงที่เรียกว่า <strong>กราฟเส้นตรง</strong></p>
 </div>
 </div>
-<div class="trigger new-trigger" data-pan-to="0%,-80%" data-focus-on="cr_equation_def" data-scale-by="3">
+<div class="trigger new-trigger" data-scale-by="3" data-pan-to="0%,-80%" data-focus-on="cr_equation_def">
 <div class="narrative">
 <p>ในกรณีทั่ว ๆ ไป</p>
 </div>
 </div>
-<div class="trigger new-trigger" data-pan-to="0%,-80%" data-focus-on="cr_equation_def" data-scale-by="3">
+<div class="trigger new-trigger" data-scale-by="3" data-pan-to="0%,-80%" data-focus-on="cr_equation_def">
 <div class="narrative">
 <p>เราสามารถเขียนกราฟของสมการนี้ เมื่อ <span class="math inline">\(B\not= 0\)</span></p>
 </div>
@@ -933,7 +928,7 @@ window.Quarto = {
 <p>โดยจัดสมการให้อยู่ในรูปที่สะดวกต่อการแทนค่า <span class="math inline">\(x\)</span> เพื่อหาค่า <span class="math inline">\(y\)</span></p>
 </div>
 </div>
-<div class="trigger new-trigger" data-pan-to="0%,-80%" data-focus-on="cr_equation_def_y_mx" data-scale-by="3">
+<div class="trigger new-trigger" data-scale-by="3" data-pan-to="0%,-80%" data-focus-on="cr_equation_def_y_mx">
 <div class="narrative">
 <p>ได้ดังรูปนี้</p>
 </div>
@@ -1115,16 +1110,16 @@ window.Quarto = {
 <div id="cr-egg" class="sticky">
 <div class="cell plain">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-98cd4436c0d4fd3ec227" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-98cd4436c0d4fd3ec227">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง) <\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-15b0e1d13c01df7b1c77" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-15b0e1d13c01df7b1c77">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง) <\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
 <div id="cr-egg1_plot" class="sticky">
 <div class="cell plain">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-a258da7a5d170d5d3543" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-a258da7a5d170d5d3543">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง)<\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"rowCallback":"function(row, data, index) {\n  if(index === 0) {\n    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});\n  }\n}","order":[],"orderClasses":false}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-952918cdeae495c959e0" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-952918cdeae495c959e0">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง)<\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"rowCallback":"function(row, data, index) {\n  if(index === 0) {\n    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});\n  }\n}","order":[],"orderClasses":false}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1138,8 +1133,8 @@ window.Quarto = {
 <div id="cr-egg2_plot" class="sticky">
 <div class="cell plain">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-5b7d4b683d115dfbbcca" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-5b7d4b683d115dfbbcca">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง)<\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"rowCallback":"function(row, data, index) {\n  if(index === 1) {\n    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});\n  }\n}","order":[],"orderClasses":false}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-fa7ec4af7c48361f9df9" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-fa7ec4af7c48361f9df9">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง)<\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"rowCallback":"function(row, data, index) {\n  if(index === 1) {\n    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});\n  }\n}","order":[],"orderClasses":false}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1153,8 +1148,8 @@ window.Quarto = {
 <div id="cr-egg3_plot" class="sticky">
 <div class="cell plain">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-bf4018d6d02e21b8158b" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-bf4018d6d02e21b8158b">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง)<\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"rowCallback":"function(row, data, index) {\n  if(index === 2) {\n    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});\n  }\n}","order":[],"orderClasses":false}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-c5eaafb9468a9fa2be93" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c5eaafb9468a9fa2be93">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง)<\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"rowCallback":"function(row, data, index) {\n  if(index === 2) {\n    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});\n  }\n}","order":[],"orderClasses":false}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1168,8 +1163,8 @@ window.Quarto = {
 <div id="cr-egg4_plot" class="sticky">
 <div class="cell plain">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-277bc1f902b20e716296" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-277bc1f902b20e716296">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง)<\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"rowCallback":"function(row, data, index) {\n  if(index === 3) {\n    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});\n  }\n}","order":[],"orderClasses":false}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-8fac15a1c0891322d9a0" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-8fac15a1c0891322d9a0">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง)<\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"rowCallback":"function(row, data, index) {\n  if(index === 3) {\n    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});\n  }\n}","order":[],"orderClasses":false}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1183,8 +1178,8 @@ window.Quarto = {
 <div id="cr-egg5_plot" class="sticky">
 <div class="cell plain">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-b242bbda16cb6c191229" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-b242bbda16cb6c191229">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง)<\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"rowCallback":"function(row, data, index) {\n  if(index === 4) {\n    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});\n  }\n}","order":[],"orderClasses":false}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-b057ad2d82d9da4b32bb" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b057ad2d82d9da4b32bb">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง)<\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"rowCallback":"function(row, data, index) {\n  if(index === 4) {\n    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});\n  }\n}","order":[],"orderClasses":false}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1198,8 +1193,8 @@ window.Quarto = {
 <div id="cr-egg6_plot" class="sticky">
 <div class="cell plain">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-3330834eed4bfac4ce02" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-3330834eed4bfac4ce02">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง)<\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"rowCallback":"function(row, data, index) {\n  if(index === 5) {\n    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});\n  }\n}","order":[],"orderClasses":false}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-232e66894dc0ceadc4aa" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-232e66894dc0ceadc4aa">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง)<\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"rowCallback":"function(row, data, index) {\n  if(index === 5) {\n    $(row).css({'background-color': '#ffe066', 'font-weight': 'bold'});\n  }\n}","order":[],"orderClasses":false}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1213,8 +1208,8 @@ window.Quarto = {
 <div id="cr-egg_total1_plot" class="sticky">
 <div class="cell plain">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-afdb79528c46d14e46fd" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-afdb79528c46d14e46fd">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง) <\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-519e14a54f43b14266fe" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-519e14a54f43b14266fe">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง) <\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1228,8 +1223,8 @@ window.Quarto = {
 <div id="cr-egg_total2_plot" class="sticky">
 <div class="cell plain">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-904e022eb91291ff9fb5" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-904e022eb91291ff9fb5">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง) <\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-3cc4c4d5073efe0f9b0e" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-3cc4c4d5073efe0f9b0e">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[5,10,15,20,25,30]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>จำนวนไข่ไก่ (ฟอง) <\/th>\n      <th>ราคาไข่ไก่ (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"egg","targets":0},{"name":"price","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1257,8 +1252,8 @@ window.Quarto = {
 <div id="cr-oil_table" class="sticky">
 <div class="cell plain">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-cc8e8aab1e7b6535b97a" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-cc8e8aab1e7b6535b97a">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[30,60,90,120,150,180]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>ปริมาณน้ำมัน (ลิตร)<\/th>\n      <th>ราคาน้ำมัน (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"oil","targets":0},{"name":"price","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-2f0c340a65cfea390ea2" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-2f0c340a65cfea390ea2">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],[30,60,90,120,150,180]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>ปริมาณน้ำมัน (ลิตร)<\/th>\n      <th>ราคาน้ำมัน (บาท)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"width":"100px","targets":0},{"width":"140px","targets":1},{"className":"dt-center","targets":"_all"},{"name":"oil","targets":0},{"name":"price","targets":1}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>

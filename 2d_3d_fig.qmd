@@ -101,15 +101,6 @@ source("/Users/pahphrame/Library/CloudStorage/OneDrive-ChulalongkornUniversity/r
 
 @cr_teacher_talk ก่อนอื่นเหมือนเดิมครับ
 
-@cr_teacher_talk อีเมล <input
-    style="flex:0 2 70px; min-width:0; max-width:250px; width:250px; display:inline-block;"
-    class="form-control"
-    name="entry.1709155807"
-    placeholder="เช่น example@email.com"
-    type="email"
-    id="q2"
-    required>
-
 รหัสนักเรียน <input
     style="flex:0 2 70px; min-width:0; max-width:200px; width:130px; display:inline-block;"
     class="form-control"

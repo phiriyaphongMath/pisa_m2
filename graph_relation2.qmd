@@ -104,14 +104,6 @@ source("/Users/pahphrame/Library/CloudStorage/OneDrive-ChulalongkornUniversity/r
 
 @cr-teacher_talk  อาจารย์อยากทราบข้อมูลส่วนตัวของนักเรียนสักหน่อย เช่นเดิม
 
-@cr-teacher_talk อีเมล <input
-    style="flex:0 2 70px; min-width:0; max-width:250px; width:250px; display:inline-block;"
-    class="form-control"
-    name="entry.415967528"
-    placeholder="เช่น example@email.com"
-    type="email"
-    required>
-
 @cr-teacher_talk รหัสนักเรียน <input
     style="flex:0 2 70px; min-width:0; max-width:200px; width:130px; display:inline-block;"
     class="form-control"
